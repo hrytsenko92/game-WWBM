@@ -1,0 +1,27 @@
+{
+  "name": "typescript-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "npx nodemon",
+    "build": "rimraf ./build && npx tsc",
+    "start": "npm run build && node build/main",
+    "lint": "npx eslint ./src",
+    "format": "npx eslint ./src --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.3.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.11",
+    "@typescript-eslint/parser": "^5.59.11",
+    "eslint": "^8.42.0",
+    "nodemon": "^2.0.22",
+    "rimraf": "^5.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.3"
+  }
+}
