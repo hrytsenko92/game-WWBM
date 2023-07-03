@@ -1,8 +1,8 @@
 import { Router } from 'express';
 export const router = Router();
 import { AuthController } from './authController.js';
-const controller = new AuthController();
 import { check } from 'express-validator';
+const controller = new AuthController();
 
 router.post(
     '/registration',
