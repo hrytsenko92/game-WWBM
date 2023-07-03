@@ -1,6 +1,14 @@
-import { analytics } from './modules/analytics.js';
+import express from 'express';
+import 'dotenv/config';
 
-const message = 'Hello NodeJS';
-console.log(message);
+const app = express();
+const port = process.env.PORT || 3000;
+console.log(process.env.PORT)
 
-analytics('Main.ts!');
+app.get('/', (req, res) => {
+    res.send('this is homepage!11!!');
+});
+
+app.listen(port, () => {
+    console.log(`server is running at port number ${port}`);
+});
