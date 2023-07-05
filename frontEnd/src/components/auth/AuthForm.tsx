@@ -1,14 +1,11 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
+import { submitForm } from './submitForm';
 
 type InputsType = {
-  login: string;
+  username: string;
   password: string;
   confirm_password: string;
-};
-
-type PropsType = {
-  hasAccount: boolean;
 };
 
 const Form = styled.form`
@@ -53,15 +50,32 @@ const Submit = styled.input`
   border: 1px solid red;
 `;
 
-export const AuthForm: React.FC<PropsType> = ({ hasAccount }) => {
+export const AuthForm: React.FC<{
+  hasAccount: boolean;
+  setHasAccount: React.Dispatch<React.SetStateAction<boolean>>;
+  hasToken: (token: string) => void;
+}> = ({ hasAccount, setHasAccount, hasToken }) => {
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
-  } = useForm<InputsType>();
+  } = useForm<InputsType>({
+    mode: 'onBlur',
+  });
 
-  const onSubmit: SubmitHandler<InputsType> = data => console.log(data);
+  const onSubmit: SubmitHandler<InputsType> = async InputData => {
+    const { username, password } = InputData;
+    const data = await submitForm(username, password, hasAccount);
+    data?.token
+      ? hasToken(data.token)
+      : data?.hasAccount
+      ? setHasAccount(true)
+      : null;
+    reset();
+  };
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Title>{hasAccount ? 'Вхід' : 'Реєстрація'}</Title>
@@ -69,7 +83,7 @@ export const AuthForm: React.FC<PropsType> = ({ hasAccount }) => {
         <Label>
           Логін
           <Login
-            {...register('login', {
+            {...register('username', {
               required: "*обов 'язково",
               minLength: {
                 value: 4,
@@ -82,9 +96,9 @@ export const AuthForm: React.FC<PropsType> = ({ hasAccount }) => {
             })}
           />
         </Label>
-        {errors?.login && (
+        {errors?.username && (
           <ErrorMessage>
-            {errors?.login?.message || "*обов 'язково"}
+            {errors?.username?.message || "*обов 'язково"}
           </ErrorMessage>
         )}
       </InputWrapper>

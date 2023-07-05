@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AuthForm } from '../../components/auth/AuthForm';
 
@@ -21,12 +22,23 @@ const Button = styled.button``;
 
 export const Auth: React.FC = () => {
   const [hasAccount, setHasAccount] = useState(true);
+  const navigate = useNavigate();
   const handleChange = () => {
-    setHasAccount((prev) => !prev)
-  }
+    setHasAccount(prev => !prev);
+  };
+  const hasToken = (token: string) => {
+    localStorage.setItem('token', token);
+    if (typeof localStorage.getItem('token') === 'string') {
+      return navigate('/main')
+    }
+  };
+
+  useEffect(()=>{
+    localStorage.getItem('token') ? navigate('/main') : null;
+  },[])
   return (
     <Container>
-      <AuthForm hasAccount={hasAccount} />
+      <AuthForm hasAccount={hasAccount} setHasAccount={setHasAccount} hasToken={hasToken} />
       {hasAccount ? (
         <ButtonWrapper>
           <Title>Створити аккаунт?</Title>

@@ -39,7 +39,7 @@ export class AuthController implements AuthControllerType {
             });
             await user.save();
             return res.json({
-                message: 'Користувач успішно зареєстрований',
+                hasAccount: true,
             });
         } catch (e) {
             console.log(e);
