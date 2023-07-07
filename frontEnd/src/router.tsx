@@ -18,17 +18,15 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Game />,
-        // loader: newsDataLoader,
+        // loader: DataLoader,
       },
       {
         path: 'game',
         element: <Game />,
-        // loader: newsDataLoader,
       },
       {
         path: 'options',
         element: <Options />,
-        // loader: newsDataLoader,
       },
     ],
   },

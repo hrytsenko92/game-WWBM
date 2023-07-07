@@ -2,7 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import 'dotenv/config';
 import cors from 'cors';
-import { router } from './auth/authRouter.js';
+import { authRouter } from './auth/authRouter.js';
+import { optionRouter } from './modules/options/optionRouter.js';
 const PORT = process.env.PORT || 5000;
 const login = process.env.LOGIN
 const password = process.env.PASSWORD
@@ -14,9 +15,10 @@ const corsOptions = {
 };
 
 const app = express();
-app.use(express.json());
 app.use(cors(corsOptions));
-app.use('/auth', router);
+app.use(express.json());
+app.use('/auth', authRouter);
+app.use('/option', optionRouter)
 
 const start = async () => {
     try {

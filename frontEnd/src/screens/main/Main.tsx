@@ -60,13 +60,24 @@ const GameLink = styled(Link)`
 `;
 
 export const Main = () => {
+  const [gameLink, setGameLink] = useState(true);
 
   return (
     <Container>
       <Header>
         <LinkWrapper>
-          <GameLink to={'game'}>Гра</GameLink>
-          <OptionLink to={'options'}>Налаштування</OptionLink>
+          {gameLink ? (
+            <OptionLink
+              onClick={() => setGameLink(prev => !prev)}
+              to={'options'}
+            >
+              Налаштування
+            </OptionLink>
+          ) : (
+            <GameLink onClick={() => setGameLink(prev => !prev)} to={'game'}>
+              Гра
+            </GameLink>
+          )}
         </LinkWrapper>
         <Title>Хто хоче стати мільйонером?</Title>
         <Logo src={logo} />

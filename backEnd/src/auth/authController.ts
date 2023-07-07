@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
 import { User } from './User.js';
-import { AuthControllerType } from '../types/authTypes.js'; 
+import { AuthControllerType } from '../types/allTypes.js'; 
 
 const secret: string = String(process.env.SKEY);
 
@@ -66,6 +66,7 @@ export class AuthController implements AuthControllerType {
                        .json({ message: `Введений не правильний пароль` });
                }
                const token = generateAccessToken(user._id);
+               console.log(user._id);
                return res.json({ token });
            } catch (e) {
                console.log(e);

@@ -1,13 +1,13 @@
 import { Router } from 'express';
-export const router = Router();
+export const authRouter = Router();
 import { AuthController } from './authController.js';
 import { check } from 'express-validator';
 const controller = new AuthController();
 
-router.post(
+authRouter.post(
     '/registration',
     [
-        check('username', 'ім\'я користувача не може бути порожнім').notEmpty(),
+        check('username', "ім'я користувача не може бути порожнім").notEmpty(),
         check(
             'password',
             'Пароль має бути довшим 4 та коротшим 10 символів'
@@ -15,6 +15,6 @@ router.post(
     ],
     controller.registration
 );
-router.post('/login', controller.login);
+authRouter.post('/login', controller.login);
 
-router.get('/users', controller.getUsers);
+authRouter.get('/users', controller.getUsers);
