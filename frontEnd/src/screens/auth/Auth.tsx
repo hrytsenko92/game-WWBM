@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AuthForm } from '../../components/auth/AuthForm';
+import { useAppSelector, useAppDispatch } from '../../store/hook';
+import { add, remove, stateType } from '../../store/userSlice';
+import { userDataType } from '../../components/auth/submitForm';
 
 const Container = styled.div`
   display: flex;
@@ -20,17 +23,33 @@ const ButtonWrapper = styled.div`
 const Title = styled.span``;
 const Button = styled.button``;
 
+
 export const Auth: React.FC = () => {
   const [hasAccount, setHasAccount] = useState(true);
   const navigate = useNavigate();
   const handleChange = () => {
     setHasAccount(prev => !prev);
   };
-  const hasToken = (token: string) => {
-    localStorage.setItem('token', token);
-    if (typeof localStorage.getItem('token') === 'string') {
-      return navigate('/main')
+
+   const dispatch = useAppDispatch();
+
+  const hasToken = (data: userDataType) => {
+    console.log(data)
+    if (typeof data.token == "string" && typeof data.id == "string") {
+       const dt = {
+         userID: data.id,
+         userToken: data.token,
+       };
+       dispatch(
+         add(dt)
+       );
     }
+    return navigate('/main');
+   
+    // localStorage.setItem('token', token);
+    // if (typeof localStorage.getItem('token') === 'string') {
+    //   return navigate('/main');
+    // }
   };
 
   useEffect(()=>{
@@ -53,3 +72,14 @@ export const Auth: React.FC = () => {
     </Container>
   );
 };
+
+  // const hasToken = (token: string) => {
+  //   localStorage.setItem('token', token);
+  //   if (typeof localStorage.getItem('token') === 'string') {
+  //     return navigate('/main');
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   localStorage.getItem('token') ? navigate('/main') : null;
+  // }, []);

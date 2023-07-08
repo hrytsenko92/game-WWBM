@@ -39,7 +39,7 @@ export class AuthController implements AuthControllerType {
             });
             await user.save();
             return res.json({
-                hasAccount: true,
+                isRegistrated: true,
             });
         } catch (e) {
             console.log(e);
@@ -54,7 +54,9 @@ export class AuthController implements AuthControllerType {
                if (!user) {
                    return res
                        .status(400)
-                       .json({ message: `Користувач ${username} не знайдений` });
+                       .json({
+                           message: `Користувач ${username} не знайдений`,
+                       });
                }
                const validPassword = bcrypt.compareSync(
                    password,
@@ -66,8 +68,11 @@ export class AuthController implements AuthControllerType {
                        .json({ message: `Введений не правильний пароль` });
                }
                const token = generateAccessToken(user._id);
-               console.log(user._id);
-               return res.json({ token });
+               const currentUser = {
+                   token,
+                   id: user._id,
+               };
+               return res.json(currentUser); 
            } catch (e) {
                console.log(e);
                res.status(400).json({ message: 'Помилка входу' });

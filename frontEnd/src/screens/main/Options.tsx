@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+///
+
+import { useAppSelector, useAppDispatch } from '../../store/hook';
+
+///
+
 const Container = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -54,6 +60,9 @@ export const Options: React.FC = () => {
     localStorage.removeItem('token');
     navigate('/');
   };
+
+    const userData = useAppSelector(state => state.userData);
+    console.log(userData)
 
   return (
     <Container>

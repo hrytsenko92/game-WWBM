@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
 import { submitForm } from './submitForm';
+import { userDataType } from './submitForm';
 
 type InputsType = {
   username: string;
@@ -53,7 +54,7 @@ const Submit = styled.input`
 export const AuthForm: React.FC<{
   hasAccount: boolean;
   setHasAccount: React.Dispatch<React.SetStateAction<boolean>>;
-  hasToken: (token: string) => void;
+  hasToken: (data: userDataType) => void;
 }> = ({ hasAccount, setHasAccount, hasToken }) => {
   const {
     register,
@@ -68,9 +69,10 @@ export const AuthForm: React.FC<{
   const onSubmit: SubmitHandler<InputsType> = async InputData => {
     const { username, password } = InputData;
     const data = await submitForm(username, password, hasAccount);
+    // console.log(data)
     data?.token
-      ? hasToken(data.token)
-      : data?.hasAccount
+      ? hasToken(data)
+      : data?.isRegistrated
       ? setHasAccount(true)
       : null;
     reset();

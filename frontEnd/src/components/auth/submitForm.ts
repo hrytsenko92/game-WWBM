@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-type resp = {
-  hasAccount?: boolean,
-  token?: string
-}
+export type userDataType = {
+  isRegistrated?: boolean;
+  token?: string;
+  id?: string;
+};
 
 const axiosConfig = {
   headers: {
@@ -31,7 +32,7 @@ export const submitForm = async (
       data,
       axiosConfig
     );
-    const responseData: resp = response.data
+    const responseData: userDataType = response.data;
     return responseData;
   } catch (error) {
     console.error('Помилка:', error);
