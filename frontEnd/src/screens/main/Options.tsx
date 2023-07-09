@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
-///
-
 import { useAppSelector, useAppDispatch } from '../../store/hook';
+import { add, remove, stateType } from '../../store/userSlice';
+import axios, { AxiosError } from 'axios';
 
-///
-
+type AllScoreType = {
+  _id: string;
+  username: string;
+  bestScore: number;
+};
 const Container = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -21,23 +23,21 @@ const Score = styled.div`
   padding: 25px;
   border: 1px solid blue;
 `; // вибірка по рейтингу, макс 10 гравців
-
-
 const SettingWrapper = styled.div`
-padding: 50px;
-background-color: #f9bb5e;
-display: grid;
-grid-template-columns: 1fr;
-grid-template-rows: auto;
-justify-items: center;
-align-items: center;
+  padding: 50px;
+  background-color: #f9bb5e;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  justify-items: center;
+  align-items: center;
 `;
 const UserScoreWrap = styled.div`
-padding: 25px;
-display: flex;
-flex-flow: row nowrap;
-justify-content: center;
-align-items: center;
+  padding: 25px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
 `;
 const UserScoreData = styled.span`
   font-size: 35px;
@@ -47,7 +47,6 @@ const Reset = styled.button`
   height: 50px;
   border: 1px solid red;
 `;
-
 const Exit = styled.button`
   width: 100px;
   height: 50px;
@@ -55,31 +54,52 @@ const Exit = styled.button`
 `;
 
 export const Options: React.FC = () => {
+  const [allScore, setAllScore] = useState<AllScoreType[]>([]);
   const navigate = useNavigate();
+  const userData = useAppSelector(state => state.userData);
+  const dispatch = useAppDispatch();
+
   const handleExit = () => {
-    localStorage.removeItem('token');
+    dispatch(remove());
     navigate('/');
   };
 
-    const userData = useAppSelector(state => state.userData);
-    console.log(userData)
+  const loadAllScore = async () => {
+    try {
+      const token = String(userData.userToken);
+      const response = await axios.get(
+        'http://localhost:5001/option/allscore',
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setAllScore(response.data);
+    } catch (err) {
+      const errors = err as Error | AxiosError;
+      if (!axios.isAxiosError(errors)) {
+        console.log(errors);
+      }
+      console.log(`Axios error: ${err}`);
+    }
+  };
 
+  useEffect(() => {
+    loadAllScore();
+  }, []);
+  console.log(allScore)
   return (
     <Container>
       <ScoreWrapper>
         <Score>
-          <ul>
-            <li>10.000</li>
-            <li>10.000</li>
-            <li>10.000</li>
-            <li>10.000</li>
-            <li>10.000</li>
-            <li>10.000</li>
-            <li>10.000</li>
-            <li>10.000</li>
-            <li>10.000</li>
-            <li>10.000</li>
-          </ul>
+          <ol>
+            {allScore.map((item)=> (
+              <li>{`${item.username} - ${item.bestScore}`}</li>
+            ))}
+          </ol>
         </Score>
       </ScoreWrapper>
       <SettingWrapper>

@@ -68,11 +68,7 @@ export class AuthController implements AuthControllerType {
                        .json({ message: `Введений не правильний пароль` });
                }
                const token = generateAccessToken(user._id);
-               const currentUser = {
-                   token,
-                   id: user._id,
-               };
-               return res.json(currentUser); 
+               return res.json(token); 
            } catch (e) {
                console.log(e);
                res.status(400).json({ message: 'Помилка входу' });

@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-export type userDataType = {
+export type HasAccTrueType = {
+  token: string;
+};
+export type HasAccFalseType = {
   isRegistrated?: boolean;
-  token?: string;
-  id?: string;
 };
 
 const axiosConfig = {
@@ -18,22 +19,24 @@ export const submitForm = async (
   password: string,
   hasAccount: boolean
 ) => {
-     const data = {
-       username,
-       password,
-     };
-  const url: string = hasAccount
-    ? 'login'
-    : 'registration';
-
+  const data = {
+    username,
+    password,
+  };
+  const url: string = hasAccount ? 'login' : 'registration';
   try {
-    const response= await axios.post(
+    const response = await axios.post(
       `http://localhost:5001/auth/${url}`,
       data,
       axiosConfig
     );
-    const responseData: userDataType = response.data;
-    return responseData;
+    if (hasAccount) {
+      const responseData: HasAccTrueType = response.data;
+      return responseData;
+    } else {
+      const responseData: HasAccFalseType = response.data;
+      return responseData;
+    }
   } catch (error) {
     console.error('Помилка:', error);
   }
