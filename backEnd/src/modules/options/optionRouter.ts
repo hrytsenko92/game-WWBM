@@ -4,3 +4,4 @@ import { OptionController } from './optionController.js';
 const controller = new OptionController();
 
 optionRouter.get('/allscore', controller.getAllUsersScore);
+optionRouter.get('/userscore', controller.getUserScore);

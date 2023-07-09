@@ -5,5 +5,6 @@ export interface AuthControllerType {
 }
 
 export interface OptionControllerType {
+    getUserScore(req: any, res: any): Promise<void>;
     getAllUsersScore(req: any, res: any): Promise<void>;
 }

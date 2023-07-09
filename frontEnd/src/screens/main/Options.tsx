@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from '../../store/hook';
-import { add, remove, stateType } from '../../store/userSlice';
-import axios, { AxiosError } from 'axios';
+import { remove } from '../../store/userSlice';
+import {
+  loadAllScore,
+  loadUserScore,
+} from '../../components/option/optionLoaders';
 
 type AllScoreType = {
   _id: string;
@@ -55,6 +58,7 @@ const Exit = styled.button`
 
 export const Options: React.FC = () => {
   const [allScore, setAllScore] = useState<AllScoreType[]>([]);
+  const [userScore, setUserScore] = useState<AllScoreType>();
   const navigate = useNavigate();
   const userData = useAppSelector(state => state.userData);
   const dispatch = useAppDispatch();
@@ -64,39 +68,25 @@ export const Options: React.FC = () => {
     navigate('/');
   };
 
-  const loadAllScore = async () => {
-    try {
-      const token = String(userData.userToken);
-      const response = await axios.get(
-        'http://localhost:5001/option/allscore',
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setAllScore(response.data);
-    } catch (err) {
-      const errors = err as Error | AxiosError;
-      if (!axios.isAxiosError(errors)) {
-        console.log(errors);
-      }
-      console.log(`Axios error: ${err}`);
-    }
-  };
-
   useEffect(() => {
-    loadAllScore();
+    const LoadAllScoreData = async () => {
+      const tempAllScore = await loadAllScore(userData.userToken);
+      setAllScore(tempAllScore);
+    };
+    const LoadUserScoreData = async () => {
+      const tempUserScore = await loadUserScore(userData.userToken);
+      setUserScore(tempUserScore);
+    };
+    LoadAllScoreData();
+    LoadUserScoreData();
   }, []);
-  console.log(allScore)
+  console.log(allScore);
   return (
     <Container>
       <ScoreWrapper>
         <Score>
           <ol>
-            {allScore.map((item)=> (
+            {allScore.map(item => (
               <li>{`${item.username} - ${item.bestScore}`}</li>
             ))}
           </ol>
@@ -104,7 +94,10 @@ export const Options: React.FC = () => {
       </ScoreWrapper>
       <SettingWrapper>
         <UserScoreWrap>
-          <UserScoreData>300.000 euro</UserScoreData>
+          <UserScoreData>
+            <div>{userScore?.username}</div>
+            <div>{userScore?.bestScore}</div>
+          </UserScoreData>
         </UserScoreWrap>
         <Reset>Reset</Reset>
         <Exit onClick={handleExit}>Вийти</Exit>
