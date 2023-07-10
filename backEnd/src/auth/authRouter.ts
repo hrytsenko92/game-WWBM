@@ -17,4 +17,3 @@ authRouter.post(
 );
 authRouter.post('/login', controller.login);
 
-authRouter.get('/users', controller.getUsers);

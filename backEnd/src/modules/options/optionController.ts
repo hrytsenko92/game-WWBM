@@ -34,8 +34,14 @@ export class OptionController implements OptionControllerType {
                         if (err) {
                             console.log(err);
                         } else if (isTokenValid(decoded)) {
+                            const user = await User.findById(decoded.id);
+                            if (!user) {
+                                return res.status(404).json({
+                                    message: 'Користувача не знайдено',
+                                });
+                            }
                             const userScore = await User.findOne(
-                                {},
+                                user._id,
                                 'username bestScore'
                             );
 
@@ -56,7 +62,7 @@ export class OptionController implements OptionControllerType {
         }
     }
 
-    async updateUserScore(req: any, res: any) {
+    async resetUserScore(req: any, res: any) {
         try {
             const token = req.headers.authorization.split(' ')[1];
             if (!token) {
@@ -72,17 +78,23 @@ export class OptionController implements OptionControllerType {
                         if (err) {
                             console.log(err);
                         } else if (isTokenValid(decoded)) {
-                           const userId = decoded.id;
-                           console.log(userId) /// тут
 
-                           const updatedUser = await User.findOneAndUpdate(
-                               { _id: userId },
-                               { $set: { bestScore: 0 } },
-                               { new: true }
-                           );
-
-
-                            // res.json(userScore);
+                            const user = await User.findById(decoded.id);
+                            if (!user) {
+                                return res
+                                    .status(404)
+                                    .json({
+                                        message: 'Користувача не знайдено',
+                                    });
+                            }
+                            await User.findByIdAndUpdate(
+                                user._id,
+                                { bestScore: 0 },
+                                { new: true }
+                            );
+                            res.json({
+                                isScoreReset: true,
+                            });
                         } else {
                             throw new Error('Токен недійсний');
                         }

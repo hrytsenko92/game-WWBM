@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from '../../store/hook';
 import { remove } from '../../store/userSlice';
 import {
-  loadAllScore,
   loadUserScore,
+  resetUserScore,
+  loadAllScore,
 } from '../../components/option/optionLoaders';
 
 type AllScoreType = {
@@ -13,6 +14,7 @@ type AllScoreType = {
   username: string;
   bestScore: number;
 };
+
 const Container = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -59,35 +61,42 @@ const Exit = styled.button`
 export const Options: React.FC = () => {
   const [allScore, setAllScore] = useState<AllScoreType[]>([]);
   const [userScore, setUserScore] = useState<AllScoreType>();
-  const navigate = useNavigate();
   const userData = useAppSelector(state => state.userData);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const handleExit = () => {
     dispatch(remove());
     navigate('/');
   };
+  const resetScore = async () => {
+    const data = await resetUserScore(userData.userToken);
+    if (data.isScoreReset) {
+      LoadAllScoreData();
+      LoadUserScoreData();
+    }
+  };
 
+  const LoadAllScoreData = async () => {
+    const tempAllScore = await loadAllScore(userData.userToken);
+    setAllScore(tempAllScore);
+  };
+  const LoadUserScoreData = async () => {
+    const tempUserScore = await loadUserScore(userData.userToken);
+    setUserScore(tempUserScore);
+  };
   useEffect(() => {
-    const LoadAllScoreData = async () => {
-      const tempAllScore = await loadAllScore(userData.userToken);
-      setAllScore(tempAllScore);
-    };
-    const LoadUserScoreData = async () => {
-      const tempUserScore = await loadUserScore(userData.userToken);
-      setUserScore(tempUserScore);
-    };
     LoadAllScoreData();
     LoadUserScoreData();
   }, []);
-  console.log(allScore);
+
   return (
     <Container>
       <ScoreWrapper>
         <Score>
           <ol>
             {allScore.map(item => (
-              <li>{`${item.username} - ${item.bestScore}`}</li>
+              <li key={item._id}>{`${item.username} - ${item.bestScore}`}</li>
             ))}
           </ol>
         </Score>
@@ -99,7 +108,7 @@ export const Options: React.FC = () => {
             <div>{userScore?.bestScore}</div>
           </UserScoreData>
         </UserScoreWrap>
-        <Reset>Reset</Reset>
+        <Reset onClick={resetScore}>Reset</Reset>
         <Exit onClick={handleExit}>Вийти</Exit>
       </SettingWrapper>
     </Container>

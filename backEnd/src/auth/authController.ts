@@ -74,13 +74,4 @@ export class AuthController implements AuthControllerType {
                res.status(400).json({ message: 'Помилка входу' });
            }
     }
-
-    async getUsers(req: any, res: any): Promise<void> {
-        try {
-            const users = await User.find();
-            res.json(users);
-        } catch (e) {
-            console.log(e);
-        }
-    }
 }

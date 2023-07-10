@@ -18,7 +18,6 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Game />,
-        // loader: DataLoader,
       },
       {
         path: 'game',

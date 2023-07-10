@@ -69,7 +69,6 @@ export const AuthForm: React.FC<{
   const onSubmit: SubmitHandler<InputsType> = async InputData => {
     const { username, password } = InputData;
     const data = await submitForm(username, password, hasAccount);
-    console.log(data);
     typeof data === 'string' ? hasToken(data) : setHasAccount(true);
     reset();
   };
