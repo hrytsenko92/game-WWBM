@@ -5,14 +5,13 @@ import { GameBar } from '../../components/game/GameBar';
 import { Advice } from '../../components/game/Advice';
 import {
   QType,
-  AType,
   testQ,
   AdwiseType,
   defaultAdwise,
 } from '../../types/questionsType';
+import { Popup } from '../../components/game/Popup';
 
 const Container = styled.section`
-  /* background-color: #6d6ded; */
   width: 100%;
   height: 100%;
   display: grid;
@@ -36,20 +35,45 @@ const GameBarWrapper = styled.section`
 export const Game: React.FC = () => {
   const [question, setQuestion] = useState<QType>();
   const [adwise, setAdwise] = useState<AdwiseType[]>();
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [message, setMessage] = useState<string>('aloha');
+
+  const handlePopup = () => {
+    setIsOpenPopup(prev => !prev);
+  };
 
   const selectAnswer = (a: boolean) => {
-    a ? console.log('yes, next'): console.log('no, new game')
+    a ? console.log('yes, next') : console.log('no, new game');
+  };
+  const handleFiftyPercent = (a: AdwiseType[]) => {
+    setAdwise(a);
+  };
+  const handleCallFriend = (a: string) => {
+    setMessage(a);
+    setIsOpenPopup(true);
+  };
+  const handleAskViewers = (a: string) => {
+    setMessage(a);
+    setIsOpenPopup(true);
   };
 
   useEffect(() => {
     setQuestion(testQ); // get from db
     setAdwise(defaultAdwise);
   }, []);
+
   return (
     <Container>
       <SideBarWrapper>
         <Score />
-        <Advice />
+        {question?.answers ? (
+          <Advice
+            answers={question.answers}
+            handleFiftyPercent={handleFiftyPercent}
+            handleCallFriend={handleCallFriend}
+            handleAskViewers={handleAskViewers}
+          />
+        ) : null}
       </SideBarWrapper>
       <GameBarWrapper>
         {question && adwise ? (
@@ -62,6 +86,9 @@ export const Game: React.FC = () => {
           <span>Loading</span>
         )}
       </GameBarWrapper>
+      {isOpenPopup ? (
+        <Popup message={message} handlePopup={handlePopup} />
+      ) : null}
     </Container>
   );
 };

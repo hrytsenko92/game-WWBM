@@ -55,10 +55,12 @@ type btnBgColorsType = {
   Red: string;
   Green: string;
   Yellow: string;
+  Grey: string;
 };
 export const btnBgColors: btnBgColorsType = {
-    Default: '#035d76',
-    Red: '#E9573F',
-    Green: '#00e42e',
-    Yellow: '#F6BB42',
-  };
+  Default: '#035d76',
+  Red: '#E9573F',
+  Green: '#00e42e',
+  Yellow: '#F6BB42',
+  Grey: '#808080',
+};

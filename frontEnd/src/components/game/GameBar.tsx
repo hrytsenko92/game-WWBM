@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import {
-  AType,
-  AdwiseType,
-  QType,
-  btnBgColors,
-} from '../../types/questionsType';
+import { AdwiseType, QType, btnBgColors } from '../../types/questionsType';
 
 const Container = styled.section`
   border: 2px solid blue;
@@ -42,44 +37,47 @@ type PropsType = {
   selectAnswer: (a: boolean) => void;
 };
 
-export const GameBar: React.FC<PropsType> = ({ question, selectAnswer }) => {
-  const [btn0Background, setBtn0Background] = useState(btnBgColors.Default);
-  const [btn1Background, setBtn1Background] = useState(btnBgColors.Default);
-  const [btn2Background, setBtn2Background] = useState(btnBgColors.Default);
-  const [btn3Background, setBtn3Background] = useState(btnBgColors.Default);
+export const GameBar: React.FC<PropsType> = ({
+  question,
+  adwise,
+  selectAnswer,
+}) => {
+  const [btnBackgrounds, setBtnBackgrounds] = useState([
+    btnBgColors.Default,
+    btnBgColors.Default,
+    btnBgColors.Default,
+    btnBgColors.Default,
+  ]);
 
-   const handleSelect = (a: boolean) => {
-    //  a ? selectAnswer() : null;
-   };
+  const handleSelectQ = (index: number, isTrue: boolean) => {
+    const newBtnBackgrounds = [...btnBackgrounds];
+    newBtnBackgrounds[index] = isTrue ? btnBgColors.Green : btnBgColors.Red;
+    setBtnBackgrounds(newBtnBackgrounds);
+
+    setTimeout(() => {
+      selectAnswer(isTrue);
+    }, 3000);
+  };
 
   return (
     <Container>
       <Question>{question.question}</Question>
       <AnswersWrapper>
-        <Answer
-          onClick={() => handleSelect(question.answers[0].isTrue)}
-          style={{ backgroundColor: btn0Background }}
-        >
-          {`A: ${question.answers[0].answer}`}
-        </Answer>
-        <Answer
-          onClick={() => handleSelect(question.answers[1].isTrue)}
-          style={{ backgroundColor: btn1Background }}
-        >
-          {`B: ${question.answers[1].answer}`}
-        </Answer>
-        <Answer
-          onClick={() => handleSelect(question.answers[2].isTrue)}
-          style={{ backgroundColor: btn2Background }}
-        >
-          {`C: ${question.answers[2].answer}`}
-        </Answer>
-        <Answer
-          onClick={() => handleSelect(question.answers[3].isTrue)}
-          style={{ backgroundColor: btn3Background }}
-        >
-          {`D: ${question.answers[3].answer}`}
-        </Answer>
+        {question.answers.map((answer, index) => {
+          const isActive = adwise[index]?.active ?? true;
+          const backgroundColor = isActive
+            ? btnBackgrounds[index]
+            : btnBgColors.Grey;
+          return (
+            <Answer
+              key={index}
+              onClick={() => handleSelectQ(index, answer.isTrue)}
+              style={{ backgroundColor }}
+            >
+              {`${String.fromCharCode(65 + index)}: ${answer.answer}`}
+            </Answer>
+          );
+        })}
       </AnswersWrapper>
     </Container>
   );
