@@ -58,21 +58,21 @@ const NewGameBtn = styled.button`
 `;
 
 export const Game: React.FC = () => {
-  const [question, setQuestion] = useState<QType>(); // питання з бБД
-  const [userScore, setUserScore] = useState<number>(15); // рахунок
-  const [adwise, setAdwise] = useState<AdwiseType[]>(); // 3 кнопки
-  const [isOpenPopup, setIsOpenPopup] = useState(false);
-  const [message, setMessage] = useState<string>(''); //
   const [newGame, setNewGame] = useState<boolean>(false);
-  const [fiftyPercent, setFiftyPercent] = useState<boolean>(false);
+  const [userScore, setUserScore] = useState<number>(15); // рахунок
+  const [question, setQuestion] = useState<QType>(); // питання з бБД
+  const [adwise, setAdwise] = useState<AdwiseType[]>();
   const [callFriend, setCallFriend] = useState<boolean>(false);
+  const [fiftyPercent, setFiftyPercent] = useState<boolean>(false);
   const [askViewers, setAskViewers] = useState<boolean>(false);
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [message, setMessage] = useState<string>(''); 
 
   const handlePopup = () => {
     setIsOpenPopup(prev => !prev);
   };
   const selectAnswer = (a: boolean) => {
-    a ? console.log('yes, next') : console.log('no, new game'); // наступне питання, бест скор--, таймер кінець гри
+    a ? console.log('yes, next') : setNewGame(false); // наступне питання, бест скор--, таймер кінець гри
   };
   const handleFiftyPercent = (a: AdwiseType[]) => {
     if (!fiftyPercent) {
@@ -94,10 +94,13 @@ export const Game: React.FC = () => {
       setAskViewers(true);
     }
   };
+  const countDownFinish = () => {
+    setNewGame(false);
+  };
 
   useEffect(() => {
     setQuestion(testQ); // перевірка на попередні ігри
-    setAdwise(defaultAdwise); // не міняти
+    setAdwise(defaultAdwise);
   }, []);
 
   return (
@@ -105,7 +108,7 @@ export const Game: React.FC = () => {
       {newGame ? (
         <Container>
           <CountDouwnWrapper>
-            <CountdownTimer />
+            <CountdownTimer countDownFinish={countDownFinish} />
           </CountDouwnWrapper>
           <SideBarWrapper>
             <Score itemIndex={userScore} />

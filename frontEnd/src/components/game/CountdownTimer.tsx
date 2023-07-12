@@ -7,18 +7,21 @@ const Container = styled.div`
   height: 100px;
   background-color: bisque;
 `;
+type PropsType = {
+  countDownFinish: () => void;
+};
 
-export const CountdownTimer: React.FC = () => {
+export const CountdownTimer: React.FC<PropsType> = ({countDownFinish}) => {
 
   return (
     <Container>
       <CountdownCircleTimer
         isPlaying
-        duration={60}
+        duration={1160}
         size={100}
         colors={['#004777', '#F7B801', '#A30000', '#A30000']}
         colorsTime={[7, 5, 2, 0]}
-        onComplete={()=> console.log("finish")}
+        onComplete={() => countDownFinish()}
       >
         {({ remainingTime }) => remainingTime}
       </CountdownCircleTimer>

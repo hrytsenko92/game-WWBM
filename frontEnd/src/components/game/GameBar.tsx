@@ -54,9 +54,15 @@ export const GameBar: React.FC<PropsType> = ({
     newBtnBackgrounds[index] = isTrue ? btnBgColors.Green : btnBgColors.Red;
     setBtnBackgrounds(newBtnBackgrounds);
 
-    setTimeout(() => {
-      selectAnswer(isTrue);
-    }, 3000);
+    if (isTrue) {
+      setTimeout(() => {
+        selectAnswer(isTrue);
+      }, 3000);
+    } else {
+      setTimeout(() => {
+        selectAnswer(isTrue);
+      }, 1500);
+    }
   };
 
   return (
