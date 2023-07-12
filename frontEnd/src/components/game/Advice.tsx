@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AType, AdwiseType } from '../../types/questionsType';
+import { AType, AdwiseType } from '../../types/allType';
 
 const Container = styled.section`
   background-color: #6d6ded;

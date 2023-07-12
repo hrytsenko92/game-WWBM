@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { AdwiseType, QType, btnBgColors } from '../../types/questionsType';
+import { AdwiseType, QType, btnBgColors } from '../../types/allType';
 
 const Container = styled.section`
   border: 2px solid blue;
