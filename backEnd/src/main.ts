@@ -4,6 +4,7 @@ import 'dotenv/config';
 import cors from 'cors';
 import { authRouter } from './auth/authRouter.js';
 import { optionRouter } from './modules/options/optionRouter.js';
+import { gameRouter } from './modules/game/gameRouter.js';
 const PORT = process.env.PORT || 5000;
 const login = process.env.LOGIN
 const password = process.env.PASSWORD
@@ -19,6 +20,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/auth', authRouter);
 app.use('/option', optionRouter)
+app.use('/game', gameRouter);
 
 const start = async () => {
     try {

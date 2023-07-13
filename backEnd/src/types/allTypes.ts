@@ -8,3 +8,8 @@ export interface OptionControllerType {
     getAllUsersScore(req: any, res: any): Promise<void>;
     resetUserScore(req: any, res: any): Promise<void>;
 }
+
+export interface GameControllerType {
+    getQuestion(req: any, res: any): Promise<void>;
+    updateUserData(req: any, res: any): Promise<void>;
+}

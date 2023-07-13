@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useAppSelector, useAppDispatch } from '../../store/hook';
 import { Score } from '../../components/game/Score';
 import { GameBar } from '../../components/game/GameBar';
 import { Advice } from '../../components/game/Advice';
 import { QType, testQ, AdwiseType, defaultAdwise } from '../../types/allType';
 import { Popup } from '../../components/game/Popup';
 import { CountdownTimer } from '../../components/game/CountdownTimer';
+import { updateUserData } from '../../components/game/dataLoaders';
+
 
 const Container = styled.section`
   width: 100%;
@@ -67,12 +70,13 @@ export const Game: React.FC = () => {
   const [askViewers, setAskViewers] = useState<boolean>(false);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [message, setMessage] = useState<string>(''); 
+   const userData = useAppSelector(state => state.userData);
 
   const handlePopup = () => {
     setIsOpenPopup(prev => !prev);
   };
   const selectAnswer = (a: boolean) => {
-    a ? console.log('yes, next') : setNewGame(false); // наступне питання, бест скор--, таймер кінець гри
+    a ? console.log('get next/question') : setNewGame(false); // наступне питання, бест скор--, таймер кінець гри
   };
   const handleFiftyPercent = (a: AdwiseType[]) => {
     if (!fiftyPercent) {
@@ -97,6 +101,17 @@ export const Game: React.FC = () => {
   const countDownFinish = () => {
     setNewGame(false);
   };
+
+  const getQuestion = (id: string | null) => {
+    if(newGame){
+      'get q f db'
+    } 
+
+  }
+
+  // const updateId = () => {
+  //   updateUserData(userData.userToken, "id001112");
+  // }
 
   useEffect(() => {
     setQuestion(testQ); // перевірка на попередні ігри
