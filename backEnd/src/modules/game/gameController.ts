@@ -20,6 +20,7 @@ const isTokenValid = (decoded: DecodedType) => {
 
 export class GameController implements GameControllerType {
     async getQuestion(req: any, res: any) {
+
         try {
             const token = req.headers.authorization.split(' ')[1];
             if (!token) {
@@ -41,17 +42,30 @@ export class GameController implements GameControllerType {
                                     message: 'Користувача не знайдено',
                                 });
                             }
-
-                            const idFromBody = req.body.id;
-                            const complexityFromBody = req.body.complexity;
-                            if (!idFromBody && !complexityFromBody) {
+                            const complexity: number = Number(req.headers.complexity);
+                            if (!complexity) {
                                 return res.status(400).json({
                                     message:
-                                        'Необхідно надати ID та complexity в req.body',
+                                        'Необхідно надати complexity в req.headers',
                                 });
                             }
+                            const idToCheck = `${req.headers.complexity}id`;
+                            const prevDataID = user.prevDataID;
+                            console.log("work...")
 
-                            
+                            const quiz = await Quiz.findById('64b3f3dec478f2c953d6ae5b');
+                            if (!quiz) {
+                                return res
+                                    .status(404)
+                                    .json({
+                                        message: 'Елемент колекції не знайдено',
+                                    });
+                            }
+
+                            res.status(200).json({ quiz });
+
+
+                            console.log('end work')
                         } else {
                             throw new Error('Токен недійсний');
                         }
@@ -92,12 +106,11 @@ export class GameController implements GameControllerType {
                             }
                             const idFromBody = req.body.id;
                             if (!idFromBody) {
-                                return res
-                                    .status(400)
-                                    .json({
-                                        message: 'Необхідно надати ID в req.body',
-                                    });
+                                return res.status(400).json({
+                                    message: 'Необхідно надати ID в req.body',
+                                });
                             }
+                            console.log(idFromBody);
                             user.prevDataID.push(idFromBody);
                             await user.save();
                             res.json({ isDataUpdated: true });

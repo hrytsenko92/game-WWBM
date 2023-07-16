@@ -7,7 +7,7 @@ import { Advice } from '../../components/game/Advice';
 import { QType, testQ, AdwiseType, defaultAdwise } from '../../types/allType';
 import { Popup } from '../../components/game/Popup';
 import { CountdownTimer } from '../../components/game/CountdownTimer';
-import { updateUserData } from '../../components/game/dataLoaders';
+import { updateUserData, getQuestion } from '../../components/game/dataLoaders';
 
 
 const Container = styled.section`
@@ -29,7 +29,7 @@ const SideBarWrapper = styled.aside`
   border: 1px solid red;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 70% 30%;
+  grid-template-rows: 75% 25%;
 `;
 const GameBarWrapper = styled.section`
   grid-column: 1/4;
@@ -62,7 +62,7 @@ const NewGameBtn = styled.button`
 
 export const Game: React.FC = () => {
   const [newGame, setNewGame] = useState<boolean>(false);
-  const [userScore, setUserScore] = useState<number>(15); // рахунок
+  const [userScore, setUserScore] = useState<number>(1); // рахунок, inside score component ()=> score to db
   const [question, setQuestion] = useState<QType>(); // питання з бБД
   const [adwise, setAdwise] = useState<AdwiseType[]>();
   const [callFriend, setCallFriend] = useState<boolean>(false);
@@ -102,16 +102,18 @@ export const Game: React.FC = () => {
     setNewGame(false);
   };
 
-  const getQuestion = (id: string | null) => {
-    if(newGame){
-      'get q f db'
-    } 
+  // const getQuestion = (id: string | null) => {
+  //   if(newGame){
+  //     'get q f db'
+  //   } 
 
-  }
-
-  // const updateId = () => {
-  //   updateUserData(userData.userToken, "id001112");
   // }
+
+  const getQuest = async () => {
+    const res = await getQuestion(userData.userToken, userScore);
+    console.log(res)
+    
+  }
 
   useEffect(() => {
     setQuestion(testQ); // перевірка на попередні ігри
@@ -123,7 +125,8 @@ export const Game: React.FC = () => {
       {newGame ? (
         <Container>
           <CountDouwnWrapper>
-            <CountdownTimer countDownFinish={countDownFinish} />
+            <button onClick={getQuest}>getQuest</button>
+            {/* <CountdownTimer countDownFinish={countDownFinish} /> */}
           </CountDouwnWrapper>
           <SideBarWrapper>
             <Score itemIndex={userScore} />
@@ -162,3 +165,5 @@ export const Game: React.FC = () => {
     </>
   );
 };
+
+// const res = await updateUserData(userData.userToken, `${userScore}${'q1'}`);

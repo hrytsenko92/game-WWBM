@@ -44,7 +44,6 @@ export class OptionController implements OptionControllerType {
                                 user._id,
                                 'username bestScore'
                             );
-
                             res.json(userScore);
                         } else {
                             throw new Error('Токен недійсний');
@@ -131,7 +130,6 @@ export class OptionController implements OptionControllerType {
                                 {},
                                 'username bestScore'
                             ).sort({ bestScore: -1 });
-
                             res.json(users);
                         } else {
                             throw new Error('Токен недійсний');
