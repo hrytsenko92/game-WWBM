@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useAppSelector, useAppDispatch } from '../../store/hook';
+import { useAppSelector} from '../../store/hook';
 import { Score } from '../../components/game/Score';
 import { GameBar } from '../../components/game/GameBar';
 import { Advice } from '../../components/game/Advice';
 import {
-  // QType,
-  // testQ,
   NextQuestion,
   AdwiseType,
   defaultAdwise,
-  // score,
 } from '../../types/allType';
 import { Popup } from '../../components/game/Popup';
 import { CountdownTimer } from '../../components/game/CountdownTimer';
@@ -68,7 +65,8 @@ const NewGameBtn = styled.button`
 
 export const Game: React.FC = () => {
   const [newGame, setNewGame] = useState<boolean>(false);
-  const [userScore, setUserScore] = useState<number>(1); // рахунок, inside score component ()=> score to db
+  const [timer, setTimer] = useState<boolean>(false)
+  const [userScore, setUserScore] = useState<number>(1); 
   const [question, setQuestion] = useState<NextQuestion>();
   const [adwise, setAdwise] = useState<AdwiseType[]>();
   const [callFriend, setCallFriend] = useState<boolean>(false);
@@ -81,25 +79,6 @@ export const Game: React.FC = () => {
   const handlePopup = () => {
     setIsOpenPopup(prev => !prev);
   };
-  const selectAnswer = async (next: boolean) => {
-    if (next) {
-      question?.id
-        ? await updateUserData(userData.userToken, question?.id)
-        : null;
-      setAdwise(defaultAdwise);
-      await getNextQuestion(userScore + 1);
-      setUserScore(prevScore => prevScore + 1);
-    } else {
-      question?.id
-        ? await updateUserData(userData.userToken, question?.id)
-        : null;
-      setAdwise(defaultAdwise);
-      setUserScore(1);
-      setNewGame(false);
-      await getNextQuestion(1);
-    }
-  };
-
   const handleFiftyPercent = (a: AdwiseType[]) => {
     if (!fiftyPercent) {
       setAdwise(a);
@@ -128,23 +107,44 @@ export const Game: React.FC = () => {
     setAdwise(defaultAdwise);
     setNewGame(false);
   };
-
   const getNextQuestion = async (score: number) => {
     const res = await getQuestion(userData.userToken, score);
     setQuestion(res.nextQuestion);
-    console.log(res);
   };
+
+  const selectAnswer = async (next: boolean) => {
+    if (next) {
+      setTimer(false);
+      setAdwise(defaultAdwise);
+      setUserScore(prevScore => prevScore + 1);
+      question?.id
+        ? await updateUserData(userData.userToken, question?.id)
+        : null;
+      await getNextQuestion(userScore);
+      setTimer(true);
+    } else {
+      question?.id
+        ? await updateUserData(userData.userToken, question?.id)
+        : null;
+      await getNextQuestion(1);
+      setNewGame(false);
+      setTimer(false);
+    }
+  };
+
   useEffect(() => {
-    userScore === 1 ? getNextQuestion(1): null;
+    getNextQuestion(1)
+    setUserScore(1);
     setAdwise(defaultAdwise);
-  }, []);
+    setTimer(true);
+  }, [newGame]);
 
   return (
     <>
       {newGame ? (
         <Container>
           <CountDouwnWrapper>
-            <CountdownTimer countDownFinish={countDownFinish} />
+            <CountdownTimer start={timer} countDownFinish={countDownFinish} />
           </CountDouwnWrapper>
           <SideBarWrapper>
             <Score itemIndex={userScore} token={userData.userToken} />

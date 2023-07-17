@@ -8,13 +8,15 @@ const Container = styled.div`
   background-color: bisque;
 `;
 type PropsType = {
+  start: boolean;
   countDownFinish: () => void;
 };
 
-export const CountdownTimer: React.FC<PropsType> = ({countDownFinish}) => {
+export const CountdownTimer: React.FC<PropsType> = ({start, countDownFinish}) => {
 
   return (
-    <Container>
+    <>
+    {start ? <Container>
       <CountdownCircleTimer
         isPlaying
         duration={60}
@@ -25,6 +27,8 @@ export const CountdownTimer: React.FC<PropsType> = ({countDownFinish}) => {
       >
         {({ remainingTime }) => remainingTime}
       </CountdownCircleTimer>
-    </Container>
+    </Container> : null }
+    </>
+    
   );
 };

@@ -178,6 +178,9 @@ export class OptionController implements OptionControllerType {
                              if (bestScoreFromBody > user.bestScore) {
                                  user.bestScore = bestScoreFromBody;
                                  await user.save();
+                                 res.json({updated: true})
+                             } else {
+                                res.json({ updated: false });
                              }
 
                         } else {
