@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { score } from '../../types/allType';
+import { updateUserScore } from './dataLoaders';
 
 const Container = styled.section`
   background-color: #6969ae;
@@ -22,9 +23,18 @@ const ScoreZero = styled.li`
 
 type PropsType = {
   itemIndex: number;
+  token: string;
 }
-// фукнція запису бест скор в БД
-export const Score: React.FC<PropsType> = ({itemIndex}) => {
+
+export const Score: React.FC<PropsType> = ({itemIndex, token}) => {
+
+  const updateScore = (itemIndex: number) => {
+    const item = score[itemIndex];
+    updateUserScore(token, item);
+  };
+  useEffect(()=>{
+    updateScore(itemIndex)
+  },[itemIndex])
   return (
     <Container>
       <ScoreWrapper>

@@ -4,11 +4,17 @@ import { useAppSelector, useAppDispatch } from '../../store/hook';
 import { Score } from '../../components/game/Score';
 import { GameBar } from '../../components/game/GameBar';
 import { Advice } from '../../components/game/Advice';
-import { QType, testQ, AdwiseType, defaultAdwise } from '../../types/allType';
+import {
+  // QType,
+  // testQ,
+  NextQuestion,
+  AdwiseType,
+  defaultAdwise,
+  // score,
+} from '../../types/allType';
 import { Popup } from '../../components/game/Popup';
 import { CountdownTimer } from '../../components/game/CountdownTimer';
 import { updateUserData, getQuestion } from '../../components/game/dataLoaders';
-
 
 const Container = styled.section`
   width: 100%;
@@ -63,21 +69,37 @@ const NewGameBtn = styled.button`
 export const Game: React.FC = () => {
   const [newGame, setNewGame] = useState<boolean>(false);
   const [userScore, setUserScore] = useState<number>(1); // рахунок, inside score component ()=> score to db
-  const [question, setQuestion] = useState<QType>(); // питання з бБД
+  const [question, setQuestion] = useState<NextQuestion>();
   const [adwise, setAdwise] = useState<AdwiseType[]>();
   const [callFriend, setCallFriend] = useState<boolean>(false);
   const [fiftyPercent, setFiftyPercent] = useState<boolean>(false);
   const [askViewers, setAskViewers] = useState<boolean>(false);
-  const [isOpenPopup, setIsOpenPopup] = useState(false);
-  const [message, setMessage] = useState<string>(''); 
-   const userData = useAppSelector(state => state.userData);
+  const [isOpenPopup, setIsOpenPopup] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>('');
+  const userData = useAppSelector(state => state.userData);
 
   const handlePopup = () => {
     setIsOpenPopup(prev => !prev);
   };
-  const selectAnswer = (a: boolean) => {
-    a ? console.log('get next/question') : setNewGame(false); // наступне питання, бест скор--, таймер кінець гри
+  const selectAnswer = async (next: boolean) => {
+    if (next) {
+      question?.id
+        ? await updateUserData(userData.userToken, question?.id)
+        : null;
+      setAdwise(defaultAdwise);
+      await getNextQuestion(userScore + 1);
+      setUserScore(prevScore => prevScore + 1);
+    } else {
+      question?.id
+        ? await updateUserData(userData.userToken, question?.id)
+        : null;
+      setAdwise(defaultAdwise);
+      setUserScore(1);
+      setNewGame(false);
+      await getNextQuestion(1);
+    }
   };
+
   const handleFiftyPercent = (a: AdwiseType[]) => {
     if (!fiftyPercent) {
       setAdwise(a);
@@ -98,25 +120,22 @@ export const Game: React.FC = () => {
       setAskViewers(true);
     }
   };
-  const countDownFinish = () => {
+  const countDownFinish = async () => {
+    setUserScore(1);
+    question?.id
+      ? await updateUserData(userData.userToken, question?.id)
+      : null;
+    setAdwise(defaultAdwise);
     setNewGame(false);
   };
 
-  // const getQuestion = (id: string | null) => {
-  //   if(newGame){
-  //     'get q f db'
-  //   } 
-
-  // }
-
-  const getQuest = async () => {
-    const res = await getQuestion(userData.userToken, userScore);
-    console.log(res)
-    
-  }
-
+  const getNextQuestion = async (score: number) => {
+    const res = await getQuestion(userData.userToken, score);
+    setQuestion(res.nextQuestion);
+    console.log(res);
+  };
   useEffect(() => {
-    setQuestion(testQ); // перевірка на попередні ігри
+    userScore === 1 ? getNextQuestion(1): null;
     setAdwise(defaultAdwise);
   }, []);
 
@@ -125,11 +144,10 @@ export const Game: React.FC = () => {
       {newGame ? (
         <Container>
           <CountDouwnWrapper>
-            <button onClick={getQuest}>getQuest</button>
-            {/* <CountdownTimer countDownFinish={countDownFinish} /> */}
+            <CountdownTimer countDownFinish={countDownFinish} />
           </CountDouwnWrapper>
           <SideBarWrapper>
-            <Score itemIndex={userScore} />
+            <Score itemIndex={userScore} token={userData.userToken} />
             {question?.answers ? (
               <Advice
                 answers={question.answers}
@@ -165,5 +183,3 @@ export const Game: React.FC = () => {
     </>
   );
 };
-
-// const res = await updateUserData(userData.userToken, `${userScore}${'q1'}`);

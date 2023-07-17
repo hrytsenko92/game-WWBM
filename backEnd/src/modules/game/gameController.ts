@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { User } from '../../auth/User.js';
-import { Quiz } from './questionsSchema.js';
-import { GameControllerType } from '../../types/allTypes.js';
+import { QuizHandler, QuizType } from './questionsSchema.js';
+import { GameControllerType, QuestionType } from '../../types/allTypes.js';
 
 export type DecodedType = {
     id: string;
@@ -20,7 +20,6 @@ const isTokenValid = (decoded: DecodedType) => {
 
 export class GameController implements GameControllerType {
     async getQuestion(req: any, res: any) {
-
         try {
             const token = req.headers.authorization.split(' ')[1];
             if (!token) {
@@ -42,30 +41,49 @@ export class GameController implements GameControllerType {
                                     message: 'Користувача не знайдено',
                                 });
                             }
-                            const complexity: number = Number(req.headers.complexity);
+                            const complexity: number = Number(
+                                req.headers.complexity
+                            );
                             if (!complexity) {
                                 return res.status(400).json({
                                     message:
                                         'Необхідно надати complexity в req.headers',
                                 });
                             }
-                            const idToCheck = `${req.headers.complexity}id`;
                             const prevDataID = user.prevDataID;
-                            console.log("work...")
-
-                            const quiz = await Quiz.findById('64b3f3dec478f2c953d6ae5b');
+                            const quiz: QuizType | null = await QuizHandler(
+                                complexity
+                            ).findOne({
+                                complexity: complexity,
+                            });
                             if (!quiz) {
-                                return res
-                                    .status(404)
-                                    .json({
-                                        message: 'Елемент колекції не знайдено',
-                                    });
+                                return res.status(404).json({
+                                    message: 'Елемент колекції не знайдено',
+                                });
                             }
+                            const getNextQuestion = (
+                                quiz: QuizType,
+                                prevDataID: Array<string>
+                            ) => {
+                                if (quiz) {
+                                    const remainingQuestions =
+                                        quiz.qData.filter(
+                                            (question) =>
+                                                !prevDataID.includes(
+                                                    question.id
+                                                )
+                                        );
+                                    return remainingQuestions.length > 0
+                                        ? remainingQuestions[0]
+                                        : null;
+                                }
+                            };
+                            const nextQuestion = getNextQuestion(
+                                quiz,
+                                prevDataID
+                            );
 
-                            res.status(200).json({ quiz });
-
-
-                            console.log('end work')
+                            res.status(200).json({ nextQuestion });
                         } else {
                             throw new Error('Токен недійсний');
                         }
@@ -110,7 +128,6 @@ export class GameController implements GameControllerType {
                                     message: 'Необхідно надати ID в req.body',
                                 });
                             }
-                            console.log(idFromBody);
                             user.prevDataID.push(idFromBody);
                             await user.save();
                             res.json({ isDataUpdated: true });

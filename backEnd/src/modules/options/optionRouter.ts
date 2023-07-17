@@ -6,3 +6,4 @@ const controller = new OptionController();
 optionRouter.get('/allscore', controller.getAllUsersScore);
 optionRouter.get('/userscore', controller.getUserScore);
 optionRouter.get('/resetuserscore', controller.resetUserScore);
+optionRouter.put('/updateuserscore', controller.updateUserScore);

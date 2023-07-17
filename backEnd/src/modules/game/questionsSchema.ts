@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { InferSchemaType } from 'mongoose';
 
 const answerSchema = new mongoose.Schema({
     answer: String,
@@ -15,5 +15,9 @@ const quizSchema = new mongoose.Schema({
     complexity: Number,
     qData: [questionSchema],
 });
+export type QuizType = InferSchemaType<typeof quizSchema>;
 
-export const Quiz = mongoose.model('Quiz', quizSchema);
+export const QuizHandler = (i: number) => {
+    let Quiz: any
+    return (Quiz = mongoose.model('Quiz', quizSchema, `questionData${i}`));
+}

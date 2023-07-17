@@ -1,37 +1,19 @@
-export type AType = {
-  answer: string;
-  isTrue: boolean;
-};
-export type QType = {
-  complexity: number;
+export interface QuestionType {
+  nextQuestion: NextQuestion;
+}
+
+export interface NextQuestion {
+  _id: string;
   id: string;
   question: string;
-  answers: AType[];
-};
+  answers: Answer[];
+}
 
-export const testQ: QType = {
-  complexity: 10,
-  id: 'id001',
-  question: 'best game?',
-  answers: [
-    {
-      answer: 'Dirt 2.0',
-      isTrue: true,
-    },
-    {
-      answer: 'TES Skyrim',
-      isTrue: false,
-    },
-    {
-      answer: 'FIFA',
-      isTrue: false,
-    },
-    {
-      answer: 'Witcher 3',
-      isTrue: false,
-    },
-  ],
-};
+export interface Answer {
+  _id: string;
+  answer: string;
+  isTrue: boolean;
+}
 
 export type AdwiseType = {
   active: boolean;
@@ -65,40 +47,22 @@ export const btnBgColors: btnBgColorsType = {
   Grey: '#808080',
 };
 
-// export const score: Array<string> = [
-//   '1,000,000 *',
-//   '500,000',
-//   '250,000',
-//   '125,000',
-//   '64,000',
-//   '32,000 *',
-//   '16,000',
-//   '8000',
-//   '4000',
-//   '2000',
-//   '1000 *',
-//   '500',
-//   '400',
-//   '300',
-//   '200',
-//   '100',
-// ];
-export const score: Array<string> = [
-  'zero',
-  '100',
-  '200',
-  '300',
-  '400',
-  '500',
-  '1000 *',
-  '2000',
-  '4000',
-  '8000',
-  '16,000',
-  '32,000 *',
-  '64,000',
-  '125,000',
-  '250,000',
-  '500,000',
-  '1,000,000 *',
+export const score: Array<number> = [
+  0,
+  100,
+  200,
+  300,
+  400,
+  500,
+  1000,
+  2000,
+  4000,
+  8000,
+  16000,
+  32000,
+  64000,
+  125000,
+  250000,
+  500000,
+  10000000,
 ];

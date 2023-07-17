@@ -17,7 +17,7 @@ export const CountdownTimer: React.FC<PropsType> = ({countDownFinish}) => {
     <Container>
       <CountdownCircleTimer
         isPlaying
-        duration={1160}
+        duration={60}
         size={100}
         colors={['#004777', '#F7B801', '#A30000', '#A30000']}
         colorsTime={[7, 5, 2, 0]}

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { AdwiseType, QType, btnBgColors } from '../../types/allType';
+import { AdwiseType, NextQuestion, btnBgColors } from '../../types/allType';
 
 const Container = styled.section`
   border: 2px solid blue;
@@ -32,7 +32,7 @@ const Answer = styled.button`
   border: 2px solid purple;
 `;
 type PropsType = {
-  question: QType;
+  question: NextQuestion;
   adwise: AdwiseType[];
   selectAnswer: (a: boolean) => void;
 };
@@ -64,7 +64,14 @@ export const GameBar: React.FC<PropsType> = ({
       }, 1500);
     }
   };
-
+useEffect(() => {
+  setBtnBackgrounds([
+    btnBgColors.Default,
+    btnBgColors.Default,
+    btnBgColors.Default,
+    btnBgColors.Default,
+  ]);
+}, [question]);
   return (
     <Container>
       <Question>{question.question}</Question>
