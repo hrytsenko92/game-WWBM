@@ -8,17 +8,19 @@ const Container = styled.div`
   background-color: bisque;
 `;
 type PropsType = {
-  start: boolean;
+  newCountDown: number;
   countDownFinish: () => void;
 };
 
-export const CountdownTimer: React.FC<PropsType> = ({start, countDownFinish}) => {
-
+export const CountdownTimer: React.FC<PropsType> = ({
+  newCountDown,
+  countDownFinish,
+}) => {
   return (
-    <>
-    {start ? <Container>
+    <Container>
       <CountdownCircleTimer
         isPlaying
+        key={newCountDown}
         duration={60}
         size={100}
         colors={['#004777', '#F7B801', '#A30000', '#A30000']}
@@ -27,8 +29,6 @@ export const CountdownTimer: React.FC<PropsType> = ({start, countDownFinish}) =>
       >
         {({ remainingTime }) => remainingTime}
       </CountdownCircleTimer>
-    </Container> : null }
-    </>
-    
+    </Container>
   );
 };

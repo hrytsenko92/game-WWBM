@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useAppSelector} from '../../store/hook';
+import { useAppSelector } from '../../store/hook';
 import { Score } from '../../components/game/Score';
 import { GameBar } from '../../components/game/GameBar';
 import { Advice } from '../../components/game/Advice';
-import {
-  NextQuestion,
-  AdwiseType,
-  defaultAdwise,
-} from '../../types/allType';
+import { NextQuestion, AdwiseType, defaultAdwise } from '../../types/allType';
 import { Popup } from '../../components/game/Popup';
 import { CountdownTimer } from '../../components/game/CountdownTimer';
 import { updateUserData, getQuestion } from '../../components/game/dataLoaders';
@@ -65,10 +61,9 @@ const NewGameBtn = styled.button`
 
 export const Game: React.FC = () => {
   const [newGame, setNewGame] = useState<boolean>(false);
-  const [timer, setTimer] = useState<boolean>(false)
-  const [userScore, setUserScore] = useState<number>(1); 
+  const [userScore, setUserScore] = useState<number>(1);
   const [question, setQuestion] = useState<NextQuestion>();
-  const [adwise, setAdwise] = useState<AdwiseType[]>();
+  const [adwise, setAdwise] = useState<AdwiseType[]>(defaultAdwise);
   const [callFriend, setCallFriend] = useState<boolean>(false);
   const [fiftyPercent, setFiftyPercent] = useState<boolean>(false);
   const [askViewers, setAskViewers] = useState<boolean>(false);
@@ -80,79 +75,62 @@ export const Game: React.FC = () => {
     setIsOpenPopup(prev => !prev);
   };
   const handleFiftyPercent = (a: AdwiseType[]) => {
-    if (!fiftyPercent) {
       setAdwise(a);
       setFiftyPercent(true);
-    }
   };
   const handleCallFriend = (a: string) => {
-    if (!callFriend) {
       setMessage(a);
       setIsOpenPopup(true);
       setCallFriend(true);
-    }
   };
   const handleAskViewers = (a: string) => {
-    if (!askViewers) {
       setMessage(a);
       setIsOpenPopup(true);
       setAskViewers(true);
-    }
   };
   const countDownFinish = async () => {
     setUserScore(1);
-    question?.id
-      ? await updateUserData(userData.userToken, question?.id)
-      : null;
-    setAdwise(defaultAdwise);
     setNewGame(false);
   };
   const getNextQuestion = async (score: number) => {
+    question?.id ? await updateUserData(userData.userToken, question?.id): null
+    adwise !== defaultAdwise ? setAdwise(defaultAdwise) : null;
     const res = await getQuestion(userData.userToken, score);
     setQuestion(res.nextQuestion);
+    setUserScore(prevScore => prevScore + 1);
   };
-
   const selectAnswer = async (next: boolean) => {
     if (next) {
-      setTimer(false);
-      setAdwise(defaultAdwise);
-      setUserScore(prevScore => prevScore + 1);
-      question?.id
-        ? await updateUserData(userData.userToken, question?.id)
-        : null;
       await getNextQuestion(userScore);
-      setTimer(true);
     } else {
-      question?.id
-        ? await updateUserData(userData.userToken, question?.id)
-        : null;
+      setUserScore(1);
       await getNextQuestion(1);
       setNewGame(false);
-      setTimer(false);
     }
   };
-
   useEffect(() => {
-    getNextQuestion(1)
-    setUserScore(1);
-    setAdwise(defaultAdwise);
-    setTimer(true);
+    newGame ? getNextQuestion(1): null;
   }, [newGame]);
-
   return (
     <>
       {newGame ? (
         <Container>
           <CountDouwnWrapper>
-            <CountdownTimer start={timer} countDownFinish={countDownFinish} />
+            <CountdownTimer
+              newCountDown={userScore}
+              countDownFinish={countDownFinish}
+            />
           </CountDouwnWrapper>
           <SideBarWrapper>
             <Score itemIndex={userScore} token={userData.userToken} />
             {question?.answers ? (
               <Advice
                 answers={question.answers}
+                isfiftyPercent={fiftyPercent}
                 handleFiftyPercent={handleFiftyPercent}
+                iscallFriend={callFriend}
                 handleCallFriend={handleCallFriend}
+                isaskViewers={askViewers}
                 handleAskViewers={handleAskViewers}
               />
             ) : null}
