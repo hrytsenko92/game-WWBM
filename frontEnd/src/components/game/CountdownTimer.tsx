@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
 const Container = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   background-color: bisque;
 `;
 type PropsType = {
@@ -22,7 +22,7 @@ export const CountdownTimer: React.FC<PropsType> = ({
         isPlaying
         key={newCountDown}
         duration={60}
-        size={100}
+        size={150}
         colors={['#004777', '#F7B801', '#A30000', '#A30000']}
         colorsTime={[7, 5, 2, 0]}
         onComplete={() => countDownFinish()}

@@ -19,8 +19,8 @@ const Container = styled.section`
 const CountDouwnWrapper = styled.div`
   grid-column: 1/2;
   grid-row: 1/2;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
 `;
 const SideBarWrapper = styled.aside`
   grid-column: 3/4;

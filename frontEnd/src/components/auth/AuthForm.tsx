@@ -2,6 +2,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
 import { submitForm } from './submitForm';
 import { HasAccTrueType } from './submitForm';
+import { colors } from '../../types/colors';
 
 type InputsType = {
   username: string;
@@ -15,23 +16,30 @@ const Form = styled.form`
   justify-content: center;
   align-items: center;
   gap: 15px;
-  border: 1px solid red;
-  width: 325px;
-  height: 400px;
-  padding: 25px;
+  border-radius: 16px;
+  width: 250px;
+  padding: 25px 0px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8.7px);
+  -webkit-backdrop-filter: blur(8.7px);
 `;
-const Title = styled.h2``;
+const Title = styled.h2`
+color: ${colors.white};
+font-size: 30px;
+`;
 const InputWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
-  height: 75px;
+  height: 70px;
 `;
 const Label = styled.label`
-  display: block;
+color: ${colors.white};
 `;
 const ErrorMessage = styled.span`
-  color: red;
+  color: ${colors.red};
 `;
 const Login = styled.input`
   display: block;
@@ -48,7 +56,10 @@ const Password = styled.input`
 const Submit = styled.input`
   width: 150px;
   height: 30px;
-  border: 1px solid red;
+  border: 1px solid ${colors.border};
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
 `;
 
 export const AuthForm: React.FC<{

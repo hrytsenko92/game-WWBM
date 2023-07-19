@@ -4,10 +4,8 @@ import styled from 'styled-components';
 import logo from '../../../public/logo.png'
 
 const Container = styled.section`
-  background-color: #92ccce;
-  border: 1px solid red;
+  padding: 50px 0px;
   height: 100vh;
-  max-width: 1200px;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 100px auto;

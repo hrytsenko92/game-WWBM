@@ -5,4 +5,3 @@ const controller = new GameController();
 
 gameRouter.get('/getquestion', controller.getQuestion);
 gameRouter.put('/updateuserdata', controller.updateUserData);
-

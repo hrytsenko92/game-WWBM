@@ -1,8 +1,3 @@
-// export type AType = {
-//   answer: string;
-//   isTrue: boolean;
-// };
-
 export interface QuestionType {
   nextQuestion: NextQuestion;
 }
@@ -23,6 +18,7 @@ export interface Answer {
 export type AdwiseType = {
   active: boolean;
 };
+
 export const defaultAdwise: AdwiseType[] = [
   {
     active: true,
@@ -37,6 +33,7 @@ export const defaultAdwise: AdwiseType[] = [
     active: true,
   },
 ];
+
 type btnBgColorsType = {
   Default: string;
   Red: string;
@@ -44,6 +41,7 @@ type btnBgColorsType = {
   Yellow: string;
   Grey: string;
 };
+
 export const btnBgColors: btnBgColorsType = {
   Default: '#035d76',
   Red: '#E9573F',
