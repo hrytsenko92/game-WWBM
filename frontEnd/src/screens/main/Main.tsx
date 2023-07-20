@@ -2,30 +2,44 @@ import { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../../../public/logo.png'
+import settingSVG from '../../assets/settings.svg'
+import playSVG from '../../assets/play.svg';
+import { colors } from '../../types/colors';
 
 const Container = styled.section`
-  padding: 50px 0px;
-  height: 100vh;
+  padding: 25px;
+  height: calc(100vh - 25px); 
+  max-width: 1440px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: flex-start;
+`;
+const GameWrapper = styled.section`
+  height: 100%;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 100px auto;
+  overflow: hidden;
+  background: #014f86;
+  border-radius: 15px;
 `;
 const Header = styled.header`
-  background-color: #b29f83;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: auto 2fr;
   grid-template-rows: 1fr;
   justify-content: center;
   justify-items: center;
   align-items: center;
+  gap: 25px;
+  padding: 0px 25px;
+  background: #012a4a;
 `;
-const Logo = styled.img`
-width: auto;
-height: 80px;
-object-position: center;
-object-fit: cover;
+const Title = styled.h3`
+  text-align: center;
+  color: #ffd700;
+  opacity: 0.8;
 `;
-const Title = styled.h3``;
 
 const LinkWrapper = styled.nav`
 display: flex;
@@ -35,26 +49,24 @@ align-items: center;
 `;
 
 const OptionLink = styled(Link)`
-display: flex;
-flex-flow: row nowrap;
-justify-content: center;
-align-items: center;
-width: 120px;
-height: 50px;
-border: 1px solid blue;
-background-color: #6c98eb;
-text-decoration: none;
+  width: 45px;
+  height: 45px;
+  text-decoration: none;
+  background-image: url(${settingSVG});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.8;
 `;
 const GameLink = styled(Link)`
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-  width: 120px;
-  height: 50px;
-  border: 1px solid blue;
-  background-color: #6c98eb;
+  width: 45px;
+  height: 45px;
   text-decoration: none;
+  background-image: url(${playSVG});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.8;
 `;
 
 export const Main = () => {
@@ -62,25 +74,26 @@ export const Main = () => {
 
   return (
     <Container>
-      <Header>
-        <LinkWrapper>
-          {gameLink ? (
-            <OptionLink
-              onClick={() => setGameLink(prev => !prev)}
-              to={'options'}
-            >
-              Налаштування
-            </OptionLink>
-          ) : (
-            <GameLink onClick={() => setGameLink(prev => !prev)} to={'game'}>
-              Гра
-            </GameLink>
-          )}
-        </LinkWrapper>
-        <Title>Хто хоче стати мільйонером?</Title>
-        <Logo src={logo} />
-      </Header>
-      <Outlet />
+      <GameWrapper>
+        <Header>
+          <LinkWrapper>
+            {gameLink ? (
+              <OptionLink
+                onClick={() => setGameLink(prev => !prev)}
+                to={'options'}
+              >
+                
+              </OptionLink>
+            ) : (
+              <GameLink onClick={() => setGameLink(prev => !prev)} to={'game'}>
+                
+              </GameLink>
+            )}
+          </LinkWrapper>
+          <Title>Хто хоче стати мільйонером?</Title>
+        </Header>
+        <Outlet />
+      </GameWrapper>
     </Container>
   );
 };

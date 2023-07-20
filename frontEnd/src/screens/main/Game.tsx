@@ -8,6 +8,8 @@ import { NextQuestion, AdwiseType, defaultAdwise } from '../../types/allType';
 import { Popup } from '../../components/game/Popup';
 import { CountdownTimer } from '../../components/game/CountdownTimer';
 import { updateUserData, getQuestion } from '../../components/game/dataLoaders';
+import { colors } from '../../types/colors';
+import playSVG from '../../assets/play.svg';
 
 const Container = styled.section`
   width: 100%;
@@ -42,21 +44,38 @@ const NewGameContainer = styled.section`
   align-items: center;
 `;
 const NewGame = styled.div`
-  width: 350px;
+  width: 300px;
   height: 100px;
-  border: 1px solid red;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+  background: rgba(255, 255, 255, 0.11);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2.8px);
+  -webkit-backdrop-filter: blur(2.8px);
 `;
-const NewGameMessage = styled.h3`
-  font-size: 25px;
-  margin-bottom: 25px;
+const NewGameMessage = styled.h4`
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: ${colors.gold};
+  opacity: 0.8;
 `;
 const NewGameBtn = styled.button`
-  width: 50px;
-  height: 25px;
+  width: 45px;
+  height: 45px;
+  text-decoration: none;
+  background-image: url(${playSVG});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border-radius: 50%;
+  border: none;
+  opacity: 0.8;
+  cursor: pointer;
+  outline: none;
 `;
 
 export const Game: React.FC = () => {
@@ -154,7 +173,7 @@ export const Game: React.FC = () => {
         <NewGameContainer>
           <NewGame>
             <NewGameMessage>Розпочати гру?</NewGameMessage>
-            <NewGameBtn onClick={() => setNewGame(true)}>Старт</NewGameBtn>
+            <NewGameBtn onClick={() => setNewGame(true)}></NewGameBtn>
           </NewGame>
         </NewGameContainer>
       )}

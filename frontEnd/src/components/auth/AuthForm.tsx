@@ -9,6 +9,9 @@ type InputsType = {
   password: string;
   confirm_password: string;
 };
+interface ExpandInputWrapperProps {
+  hasAccount: boolean;
+}
 
 const Form = styled.form`
   display: flex;
@@ -34,6 +37,11 @@ const InputWrapper = styled.div`
   flex-flow: column nowrap;
   justify-content: flex-start;
   height: 70px;
+`;
+const ExpandInputWrapper = styled.div<ExpandInputWrapperProps>`
+  height: ${props => (props.hasAccount ? '0' : '70px')};
+  overflow: hidden;
+  transition: height 0.5s ease; 
 `;
 const Label = styled.label`
 color: ${colors.white};
@@ -134,37 +142,39 @@ export const AuthForm: React.FC<{
           </ErrorMessage>
         )}
       </InputWrapper>
-      {!hasAccount ? (
-        <InputWrapper>
-          <Label>
-            Підтвердити пароль
-            <Password
-              type="password"
-              {...register('confirm_password', {
-                required: "*обов 'язково",
-                minLength: {
-                  value: 4,
-                  message: 'Мінімум 4 символи',
-                },
-                maxLength: {
-                  value: 10,
-                  message: 'Максимум 10 символів',
-                },
-                validate: (val: string) => {
-                  if (watch('password') != val) {
-                    return 'Паролі не співпадають';
-                  }
-                },
-              })}
-            />
-          </Label>
-          {errors?.confirm_password && (
-            <ErrorMessage>
-              {errors?.confirm_password.message || 'Паролі не співпадають'}
-            </ErrorMessage>
-          )}
-        </InputWrapper>
-      ) : null}
+      <ExpandInputWrapper hasAccount={hasAccount}>
+        {!hasAccount ? (
+          <InputWrapper>
+            <Label>
+              Підтвердити пароль
+              <Password
+                type="password"
+                {...register('confirm_password', {
+                  required: "*обов 'язково",
+                  minLength: {
+                    value: 4,
+                    message: 'Мінімум 4 символи',
+                  },
+                  maxLength: {
+                    value: 10,
+                    message: 'Максимум 10 символів',
+                  },
+                  validate: (val: string) => {
+                    if (watch('password') != val) {
+                      return 'Паролі не співпадають';
+                    }
+                  },
+                })}
+              />
+            </Label>
+            {errors?.confirm_password && (
+              <ErrorMessage>
+                {errors?.confirm_password.message || 'Паролі не співпадають'}
+              </ErrorMessage>
+            )}
+          </InputWrapper>
+        ) : null}
+      </ExpandInputWrapper>
       <Submit type="submit" />
     </Form>
   );
