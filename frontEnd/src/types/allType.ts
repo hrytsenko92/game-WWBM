@@ -34,21 +34,21 @@ export const defaultAdwise: AdwiseType[] = [
   },
 ];
 
-type btnBgColorsType = {
-  Default: string;
-  Red: string;
-  Green: string;
-  Yellow: string;
-  Grey: string;
-};
+// type btnBgColorsType = {
+//   Default: string;
+//   Red: string;
+//   Green: string;
+//   Yellow: string;
+//   Grey: string;
+// };
 
-export const btnBgColors: btnBgColorsType = {
-  Default: '#035d76',
-  Red: '#E9573F',
-  Green: '#00e42e',
-  Yellow: '#F6BB42',
-  Grey: '#808080',
-};
+// export const btnBgColors: btnBgColorsType = {
+//   Default: '#b0b8be',
+//   Red: '#E9573F',
+//   Green: '#00e42e',
+//   Yellow: '#F6BB42',
+//   Grey: '#808080',
+// };
 
 export const score: Array<number> = [
   0, 100, 200, 300, 400, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000,

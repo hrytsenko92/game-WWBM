@@ -21,9 +21,17 @@ const Container = styled.section`
   grid-template-rows: 1fr 1.5fr;
   gap: 25px;
   padding: 25px;
-  min-width: 375;
-  max-width: 640px;
   width: 100%;
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 const Score = styled.ul`
   grid-column: 1/2;
@@ -40,10 +48,10 @@ const Score = styled.ul`
   -webkit-backdrop-filter: blur(2.8px);
 `;
 const ScoreItem = styled.li`
-text-align: center;
-list-style: none;
-font-size: 1rem;
-white-space: nowrap;
+  text-align: center;
+  list-style: none;
+  font-size: 1rem;
+  white-space: nowrap;
 `;
 const UserScoreWrapper = styled.div`
   grid-column: 1/3;
@@ -61,7 +69,6 @@ const UserScoreWrapper = styled.div`
 `;
 const Title = styled.h3`
   font-size: 1rem;
-  
 `;
 const SybTitle = styled.h3`
   font-size: 0.8rem;
@@ -82,13 +89,14 @@ const SettingWrapper = styled.div`
   gap: 10px;
 `;
 const ResetWrapper = styled.div`
-width: 100%;
-height: 100%;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
   row-gap: 10px;
+  padding: 10px;
   background: rgba(255, 255, 255, 0.11);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -96,9 +104,9 @@ height: 100%;
   -webkit-backdrop-filter: blur(2.8px);
 `;
 const ResetTitle = styled.span`
-font-size: 1rem;
-text-align: center;
-`
+  font-size: 1rem;
+  text-align: center;
+`;
 const Reset = styled.button`
   width: 40px;
   height: 40px;
@@ -121,6 +129,7 @@ const ExitWrapper = styled.div`
   justify-content: center;
   align-items: center;
   row-gap: 10px;
+  padding: 10px;
   background: rgba(255, 255, 255, 0.11);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
