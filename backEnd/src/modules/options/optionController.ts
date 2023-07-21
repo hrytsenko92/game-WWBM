@@ -60,7 +60,42 @@ export class OptionController implements OptionControllerType {
             res.status(500).json({ message: 'Помилка сервера' });
         }
     }
-
+    async getAllUsersScore(req: any, res: any) {
+        try {
+            const token = req.headers.authorization.split(' ')[1];
+            if (!token) {
+                return res
+                    .status(401)
+                    .json({ message: 'Необхідно надати токен' });
+            }
+            try {
+                jwt.verify(
+                    token,
+                    secret,
+                    async (err: any, decoded: any): Promise<void> => {
+                        if (err) {
+                            console.log(err);
+                        } else if (isTokenValid(decoded)) {
+                            const users = await User.find(
+                                {},
+                                'username bestScore'
+                            ).sort({ bestScore: -1 });
+                            res.json(users);
+                        } else {
+                            throw new Error('Токен недійсний');
+                        }
+                    }
+                );
+            } catch (err) {
+                return res
+                    .status(401)
+                    .json({ message: 'Невірний токен або недостатньо прав' });
+            }
+        } catch (e) {
+            console.log(e);
+            res.status(500).json({ message: 'Помилка сервера' });
+        }
+    }
     async resetUserScore(req: any, res: any) {
         try {
             const token = req.headers.authorization.split(' ')[1];
@@ -106,44 +141,6 @@ export class OptionController implements OptionControllerType {
             res.status(500).json({ message: 'Помилка сервера' });
         }
     }
-
-    async getAllUsersScore(req: any, res: any) {
-        try {
-            const token = req.headers.authorization.split(' ')[1];
-            if (!token) {
-                return res
-                    .status(401)
-                    .json({ message: 'Необхідно надати токен' });
-            }
-            try {
-                jwt.verify(
-                    token,
-                    secret,
-                    async (err: any, decoded: any): Promise<void> => {
-                        if (err) {
-                            console.log(err);
-                        } else if (isTokenValid(decoded)) {
-                            const users = await User.find(
-                                {},
-                                'username bestScore'
-                            ).sort({ bestScore: -1 });
-                            res.json(users);
-                        } else {
-                            throw new Error('Токен недійсний');
-                        }
-                    }
-                );
-            } catch (err) {
-                return res
-                    .status(401)
-                    .json({ message: 'Невірний токен або недостатньо прав' });
-            }
-        } catch (e) {
-            console.log(e);
-            res.status(500).json({ message: 'Помилка сервера' });
-        }
-    }
-
     async updateUserScore(req: any, res: any) {
         try {
             const token = req.headers.authorization.split(' ')[1];
@@ -175,14 +172,13 @@ export class OptionController implements OptionControllerType {
                                 });
                             }
 
-                             if (bestScoreFromBody > user.bestScore) {
-                                 user.bestScore = bestScoreFromBody;
-                                 await user.save();
-                                 res.json({updated: true})
-                             } else {
+                            if (bestScoreFromBody > user.bestScore) {
+                                user.bestScore = bestScoreFromBody;
+                                await user.save();
+                                res.json({ updated: true });
+                            } else {
                                 res.json({ updated: false });
-                             }
-
+                            }
                         } else {
                             throw new Error('Токен недійсний');
                         }

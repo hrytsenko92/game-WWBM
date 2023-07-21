@@ -9,7 +9,7 @@ const Container = styled.section`
   justify-content: flex-start;
   align-items: center;
   height: 100%;
-  width: 100%;
+  min-width: 100%;
   padding: 50px;
 `;
 const Question = styled.div`

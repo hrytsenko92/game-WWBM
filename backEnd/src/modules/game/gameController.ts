@@ -51,6 +51,11 @@ export class GameController implements GameControllerType {
                                 });
                             }
                             const prevDataID = user.prevDataID;
+                            const hasC1q12 = prevDataID.includes('c1q12');
+                            if (hasC1q12) {
+                                user.prevDataID.splice(0, prevDataID.length);
+                                await user.save();
+                            }
                             const quiz: QuizType | null = await QuizHandler(
                                 complexity
                             ).findOne({
