@@ -29,8 +29,8 @@ const Form = styled.form`
   -webkit-backdrop-filter: blur(8.7px);
 `;
 const Title = styled.h2`
-color: ${colors.white};
-font-size: 30px;
+  color: ${colors.white};
+  font-size: 30px;
 `;
 const InputWrapper = styled.div`
   display: flex;
@@ -41,10 +41,10 @@ const InputWrapper = styled.div`
 const ExpandInputWrapper = styled.div<ExpandInputWrapperProps>`
   height: ${props => (props.hasAccount ? '0' : '70px')};
   overflow: hidden;
-  transition: height 0.5s ease; 
+  transition: height 0.5s ease;
 `;
 const Label = styled.label`
-color: ${colors.white};
+  color: ${colors.white};
 `;
 const ErrorMessage = styled.span`
   color: ${colors.red};

@@ -9,16 +9,17 @@ import { Popup } from '../../components/game/Popup';
 import { CountdownTimer } from '../../components/game/CountdownTimer';
 import { updateUserData, getQuestion } from '../../components/game/dataLoaders';
 import { colors } from '../../types/colors';
+import wwbmSVG from '../../../public/wwbm.svg';
 
 const Container = styled.section`
+  position: relative;
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 100px 150px;
+  grid-template-columns: 100px 75px;
   grid-template-rows: auto auto;
   justify-content: space-between;
   padding: 15px;
-  opacity: 0;
   animation: fadeIn 1s ease-out forwards;
   @keyframes fadeIn {
     from {
@@ -27,6 +28,23 @@ const Container = styled.section`
     to {
       opacity: 1;
     }
+  }
+  &::before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0px;
+    right: 0;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    background-image: url(${wwbmSVG});
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    background-size: 90%;
+    z-index: -1;
   }
 `;
 const CountDouwnWrapper = styled.div`
@@ -41,11 +59,6 @@ const CountDouwnWrapper = styled.div`
 const SideBarWrapper = styled.aside`
   grid-column: 2/3;
   grid-row: 1/2;
-  background: rgba(255, 255, 255, 0.11);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(2.8px);
-  -webkit-backdrop-filter: blur(2.8px);
 `;
 const GameBarWrapper = styled.section`
   grid-column: 1/3;
@@ -56,6 +69,7 @@ const NewGameContainer = styled.section`
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+  min-height: 400px;
 `;
 const NewGame = styled.div`
   width: 300px;
@@ -107,25 +121,27 @@ export const Game: React.FC = () => {
     setIsOpenPopup(prev => !prev);
   };
   const handleFiftyPercent = (a: AdwiseType[]) => {
-      setAdwise(a);
-      setFiftyPercent(true);
+    setAdwise(a);
+    setFiftyPercent(true);
   };
   const handleCallFriend = (a: string) => {
-      setMessage(a);
-      setIsOpenPopup(true);
-      setCallFriend(true);
+    setMessage(a);
+    setIsOpenPopup(true);
+    setCallFriend(true);
   };
   const handleAskViewers = (a: string) => {
-      setMessage(a);
-      setIsOpenPopup(true);
-      setAskViewers(true);
+    setMessage(a);
+    setIsOpenPopup(true);
+    setAskViewers(true);
   };
   const countDownFinish = async () => {
     setUserScore(1);
     setNewGame(false);
   };
   const getNextQuestion = async (score: number) => {
-    question?.id ? await updateUserData(userData.userToken, question?.id): null
+    question?.id
+      ? await updateUserData(userData.userToken, question?.id)
+      : null;
     adwise !== defaultAdwise ? setAdwise(defaultAdwise) : null;
     const res = await getQuestion(userData.userToken, score);
     setQuestion(res.nextQuestion);
@@ -136,12 +152,18 @@ export const Game: React.FC = () => {
       await getNextQuestion(userScore);
     } else {
       setUserScore(1);
+      adwise !== defaultAdwise ? setAdwise(defaultAdwise) : null;
       await getNextQuestion(1);
       setNewGame(false);
     }
   };
   useEffect(() => {
-    newGame ? getNextQuestion(1): null;
+    setQuestion(undefined);
+    setUserScore(1);
+    setCallFriend(false);
+    setFiftyPercent(false);
+    setAskViewers(false);
+    newGame ? getNextQuestion(1) : null;
   }, [newGame]);
   return (
     <>

@@ -13,7 +13,7 @@ export const colors: ColorsType = {
   white: '#ffffff',
   red: '#ff0000',
   orange: '#d97a07',
-  blue: '#2819ade0',
+  blue: '#012a4a',
   gold: '#ffd700',
   border: '#353535',
   defaultQuestion: '#b0b8be',

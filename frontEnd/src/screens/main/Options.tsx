@@ -76,8 +76,10 @@ const SybTitle = styled.h3`
   text-align: justify;
 `;
 const UserScoreData = styled.span`
-  font-size: 1rem;
-  padding-bottom: 10px;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: ${colors.gold};
+  margin: 10px 0px;
 `;
 const SettingWrapper = styled.div`
   grid-column: 2/3;

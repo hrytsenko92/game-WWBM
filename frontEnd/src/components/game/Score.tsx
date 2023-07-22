@@ -3,20 +3,22 @@ import styled from 'styled-components';
 import { score } from '../../types/allType';
 import { updateUserScore } from './dataLoaders';
 
-const Container = styled.section`
-`;
+const Container = styled.section``;
 const ScoreWrapper = styled.ul`
   display: flex;
   flex-flow: column-reverse nowrap;
   list-style: none;
+  padding: 5px 0px;
+  text-align: right;
+  width: auto;
 `;
 const ScoreItem = styled.li`
-  /* background-color: yellow; */
-  padding-left: 20px;
+  font-size: 0.9rem;
+  color: gold;
 `;
 const ScoreItemCurrent = styled.li`
   background-color: gold;
-  padding-left: 10px;
+  font-size: 0.9rem;
 `;
 const ScoreZero = styled.li`
   display: none;
@@ -44,9 +46,7 @@ export const Score: React.FC<PropsType> = ({ itemIndex, token }) => {
           if (index === 0) {
             return <ScoreZero key={index}>{item}</ScoreZero>;
           } else if (index === itemIndex - 1) {
-            return (
-              <ScoreItemCurrent key={index}>{`\u2192 ${item}`}</ScoreItemCurrent>
-            );
+            return <ScoreItemCurrent key={index}>{item}</ScoreItemCurrent>;
           } else {
             return <ScoreItem key={index}>{item}</ScoreItem>;
           }

@@ -1,10 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AdwiseType, Answer } from '../../types/allType';
-import fiftyPercentSVG from '../../assets/percent.svg';
-import callFriend from '../../assets/call.svg';
-import askViewers from '../../assets/opinion.svg';
-
 
 const Container = styled.section`
   display: flex;
@@ -128,9 +124,9 @@ export const Advice: React.FC<PropsType> = ({
       });
     }
   };
-const activeColorFiftyPercent = isfiftyPercent ? '#000000' : '#ffd700';
-const activeColorCallFriend = iscallFriend ? '#000000' : '#ffd700';
-const activeColoraskViewers = isaskViewers ? '#000000' : '#ffd700';
+  const activeColorFiftyPercent = isfiftyPercent ? '#000000' : '#ffd700';
+  const activeColorCallFriend = iscallFriend ? '#000000' : '#ffd700';
+  const activeColoraskViewers = isaskViewers ? '#000000' : '#ffd700';
 
   return (
     <Container>

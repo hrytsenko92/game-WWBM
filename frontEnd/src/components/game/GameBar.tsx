@@ -10,14 +10,14 @@ const Container = styled.section`
   align-items: center;
   height: 100%;
   min-width: 100%;
-  padding: 25px;
+  padding-top: 15px;
 `;
 const LineWrapper = styled.div`
   padding: 15px 25px;
   width: 100%;
   height: auto;
   min-height: 70px;
-  border: 3px solid ${colors.border};
+  border: 3px solid ${colors.blue};
   border-radius: 50px;
   background-color: ${colors.defaultQuestion};
   display: flex;
@@ -32,7 +32,7 @@ const LineWrapper = styled.div`
     left: -300px;
     width: 300px;
     height: 5px;
-    background-color: ${colors.border};
+    background-color: ${colors.blue};
   }
   &::after {
     content: '';
@@ -41,14 +41,13 @@ const LineWrapper = styled.div`
     right: -300px;
     width: 300px;
     height: 5px;
-    background-color: ${colors.border};
+    background-color: ${colors.blue};
   }
 `;
 
 const Question = styled.div`
-font-size: 1rem;
-text-align: center;
-
+  font-size: 1rem;
+  text-align: center;
 `;
 const AnswersWrapper = styled.div`
   height: 100%;
@@ -90,12 +89,20 @@ export const GameBar: React.FC<PropsType> = ({
     colors.defaultQuestion,
     colors.defaultQuestion,
   ]);
-
   const handleSelectQ = (index: number, isTrue: boolean) => {
     const newBtnBackgrounds = [...btnBackgrounds];
     newBtnBackgrounds[index] = isTrue ? colors.green : colors.red;
-    setBtnBackgrounds(newBtnBackgrounds);
+    if (!isTrue) {
+      for (let i = 0; i < question.answers.length; i++) {
+        if (i !== index && !question.answers[i].isTrue) {
+          newBtnBackgrounds[i] = colors.red;
+        } else if (i !== index && question.answers[i].isTrue) {
+          newBtnBackgrounds[i] = colors.green;
+        }
+      }
+    }
 
+    setBtnBackgrounds(newBtnBackgrounds);
     if (isTrue) {
       setTimeout(() => {
         selectAnswer(isTrue);
@@ -106,14 +113,14 @@ export const GameBar: React.FC<PropsType> = ({
       }, 1500);
     }
   };
-useEffect(() => {
-  setBtnBackgrounds([
-    colors.defaultQuestion,
-    colors.defaultQuestion,
-    colors.defaultQuestion,
-    colors.defaultQuestion,
-  ]);
-}, [question]);
+  useEffect(() => {
+    setBtnBackgrounds([
+      colors.defaultQuestion,
+      colors.defaultQuestion,
+      colors.defaultQuestion,
+      colors.defaultQuestion,
+    ]);
+  }, [question]);
   return (
     <Container>
       <LineWrapper>
@@ -124,16 +131,15 @@ useEffect(() => {
           const isActive = adwise[index]?.active ?? true;
           const backgroundColor = isActive
             ? btnBackgrounds[index]
-            : colors.defaultQuestion;
+            : colors.border;
           return (
-
-              <Answer
-                key={index}
-                onClick={() => handleSelectQ(index, answer.isTrue)}
-                style={{ backgroundColor }}
-              >
-                {`${String.fromCharCode(65 + index)}: ${answer.answer}`}
-              </Answer>
+            <Answer
+              key={index}
+              onClick={() => handleSelectQ(index, answer.isTrue)}
+              style={{ backgroundColor }}
+            >
+              {`${String.fromCharCode(65 + index)}: ${answer.answer}`}
+            </Answer>
           );
         })}
       </AnswersWrapper>

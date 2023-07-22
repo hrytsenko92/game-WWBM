@@ -39,7 +39,6 @@ export const getQuestion = async (userToken: string, complexity: number) => {
         },
       }
     );
-    console.log(response.data);
     return response.data;
   } catch (err) {
     const errors = err as Error | AxiosError;

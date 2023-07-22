@@ -27,7 +27,7 @@ body {
   align-items: center;
   background: linear-gradient(-45deg, #051937, #150d5f, #144a8b, #1766ba, #1283eb);
   background-size: 400% 400%;
-	animation: gradient 25s ease infinite;
+	animation: gradient 15s ease infinite;
   @keyframes gradient {
 	0% {
 		background-position: 0% 50%;

@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
 import { User } from './User.js';
-import { AuthControllerType } from '../types/allTypes.js'; 
+import { AuthControllerType } from '../types/allTypes.js';
 
 const secret: string = String(process.env.SKEY);
 
@@ -48,30 +48,25 @@ export class AuthController implements AuthControllerType {
     }
 
     async login(req: any, res: any): Promise<void> {
-           try {
-               const { username, password } = req.body;
-               const user = await User.findOne({ username });
-               if (!user) {
-                   return res
-                       .status(400)
-                       .json({
-                           message: `Користувач ${username} не знайдений`,
-                       });
-               }
-               const validPassword = bcrypt.compareSync(
-                   password,
-                   user.password
-               );
-               if (!validPassword) {
-                   return res
-                       .status(400)
-                       .json({ message: `Введений не правильний пароль` });
-               }
-               const token = generateAccessToken(user._id);
-               return res.json(token); 
-           } catch (e) {
-               console.log(e);
-               res.status(400).json({ message: 'Помилка входу' });
-           }
+        try {
+            const { username, password } = req.body;
+            const user = await User.findOne({ username });
+            if (!user) {
+                return res.status(400).json({
+                    message: `Користувач ${username} не знайдений`,
+                });
+            }
+            const validPassword = bcrypt.compareSync(password, user.password);
+            if (!validPassword) {
+                return res
+                    .status(400)
+                    .json({ message: `Введений не правильний пароль` });
+            }
+            const token = generateAccessToken(user._id);
+            return res.json(token);
+        } catch (e) {
+            console.log(e);
+            res.status(400).json({ message: 'Помилка входу' });
+        }
     }
 }

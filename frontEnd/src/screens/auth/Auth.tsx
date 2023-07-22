@@ -13,7 +13,6 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 25px;
-  margin-top: 25%;
   background: rgba(255, 255, 255, 0.11);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -38,9 +37,9 @@ const ButtonWrapper = styled.div`
   margin-top: 20px;
 `;
 const Title = styled.span`
-text-align: center;
-color: ${colors.white};
-opacity: 0.8;
+  text-align: center;
+  color: ${colors.white};
+  opacity: 0.8;
 `;
 const Button = styled.button`
   width: 150px;
@@ -71,24 +70,23 @@ export const Auth: React.FC = () => {
     userData.userToken.length > 0 ? navigate('/main') : null;
   }, []);
   return (
-
-          <Container>
-            <AuthForm
-              hasAccount={hasAccount}
-              setHasAccount={setHasAccount}
-              hasToken={hasToken}
-            />
-            {hasAccount ? (
-              <ButtonWrapper>
-                <Title>Зареєструвати користувача?</Title>
-                <Button onClick={handleChange}>Реєстрація</Button>
-              </ButtonWrapper>
-            ) : (
-              <ButtonWrapper>
-                <Title>Ви вже зареєстровані?</Title>
-                <Button onClick={handleChange}>Увійти</Button>
-              </ButtonWrapper>
-            )}
-          </Container>
+    <Container>
+      <AuthForm
+        hasAccount={hasAccount}
+        setHasAccount={setHasAccount}
+        hasToken={hasToken}
+      />
+      {hasAccount ? (
+        <ButtonWrapper>
+          <Title>Зареєструвати користувача?</Title>
+          <Button onClick={handleChange}>Реєстрація</Button>
+        </ButtonWrapper>
+      ) : (
+        <ButtonWrapper>
+          <Title>Ви вже зареєстровані?</Title>
+          <Button onClick={handleChange}>Увійти</Button>
+        </ButtonWrapper>
+      )}
+    </Container>
   );
 };
