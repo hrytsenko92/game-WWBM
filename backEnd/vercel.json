@@ -3,7 +3,7 @@
     "builds": [
         {
             "src": "package.json",
-            "use": "npm run start"
+            "use": "start"
         }
     ],
     "routes": [
