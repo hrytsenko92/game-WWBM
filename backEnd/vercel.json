@@ -1,10 +1,10 @@
 {
     "version": 2,
     "builds": [
-        {
-            "src": "package.json",
-            "use": "npm run start"
-        }
+       {
+           "src": "npm:start-server",
+           "use": "@now/node"
+       }
     ],
     
     "routes": [
