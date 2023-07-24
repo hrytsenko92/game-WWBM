@@ -1,12 +1,5 @@
 {
     "version": 2,
-    "builds": [
-       {
-           "src": "npm:start-server",
-           "use": "@now/node"
-       }
-    ],
-    
     "routes": [
         {
             "src": "/(.*)",
