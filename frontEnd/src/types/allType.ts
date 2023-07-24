@@ -38,3 +38,5 @@ export const score: Array<number> = [
   0, 100, 200, 300, 400, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000,
   125000, 250000, 500000, 10000000,
 ];
+
+export const urlPath = 'https://game-wwbm.vercel.app';

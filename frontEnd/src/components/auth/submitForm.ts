@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {urlPath} from '../../types/allType';
 
 export type HasAccTrueType = {
   token: string;
@@ -26,7 +27,7 @@ export const submitForm = async (
   const url: string = hasAccount ? 'login' : 'registration';
   try {
     const response = await axios.post(
-      `http://localhost:5001/auth/${url}`,
+      `${urlPath}/auth/${url}`,
       data,
       axiosConfig
     );

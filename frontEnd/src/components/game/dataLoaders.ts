@@ -1,11 +1,12 @@
 import axios, { AxiosError } from "axios";
+import { urlPath } from '../../types/allType';
 
 
 export const updateUserData = async (userToken: string, id: string) => {
   try {
     const token = String(userToken);
     const response = await axios.put(
-      'http://localhost:5001/game/updateuserdata',
+      `${urlPath}/game/updateuserdata`,
       { id },
       {
         headers: {
@@ -29,7 +30,7 @@ export const getQuestion = async (userToken: string, complexity: number) => {
   try {
     const token = String(userToken);
     const response = await axios.get(
-      'http://localhost:5001/game/getquestion',
+      `${urlPath}/game/getquestion`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +54,7 @@ export const updateUserScore = async (userToken: string, bestScore: number) => {
   try {
     const token = String(userToken);
     const response = await axios.put(
-      'http://localhost:5001/option/updateuserscore',
+      `${urlPath}/option/updateuserscore`,
       { bestScore },
       {
         headers: {

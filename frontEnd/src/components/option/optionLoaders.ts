@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios';
+import { urlPath } from '../../types/allType';
 
 export type ParamType = {
   userToken: string;
@@ -7,7 +8,7 @@ export type ParamType = {
 export const loadUserScore = async (userToken: string) => {
   try {
     const token = String(userToken);
-    const response = await axios.get('http://localhost:5001/option/userscore', {
+    const response = await axios.get(`${urlPath}/option/userscore`, {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -27,16 +28,13 @@ export const loadUserScore = async (userToken: string) => {
 export const resetUserScore = async (userToken: string) => {
   try {
     const token = String(userToken);
-    const response = await axios.get(
-      'http://localhost:5001/option/resetuserscore',
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${urlPath}/option/resetuserscore`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (err) {
     const errors = err as Error | AxiosError;
@@ -51,7 +49,7 @@ export const resetUserScore = async (userToken: string) => {
 export const loadAllScore = async (userToken: string) => {
   try {
     const token = String(userToken);
-    const response = await axios.get('http://localhost:5001/option/allscore', {
+    const response = await axios.get(`${urlPath}/option/allscore`, {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
