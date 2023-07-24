@@ -22,7 +22,7 @@ app.use('/auth', authRouter);
 app.use('/option', optionRouter);
 app.use('/game', gameRouter);
 
-const start = async () => {
+export const start = async () => {
     try {
         await mongoose.connect(
             `mongodb+srv://${login}:${password}@gamedataapi.btxwlgv.mongodb.net/gamedata?retryWrites=true&w=majority`

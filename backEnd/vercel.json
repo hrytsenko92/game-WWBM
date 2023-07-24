@@ -2,16 +2,9 @@
     "version": 2,
     "builds": [
         {
-            "src": "package.json",
+            "src": "npm run build && node build/main",
             "use": "@vercel/node"
         }
     ],
-    "outputDirectory": "build",
-    "routes": [
-        {
-            "src": "/build/main.js",
-            "dest": "/build/main.js"
-        }
-    ],
-    "buildCommand": "npm run start"
+    "routes": [{ "src": "/(.*)", "dest": "build/main.js" }]
 }
