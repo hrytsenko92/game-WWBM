@@ -7,11 +7,11 @@
         }
     ],
     "outputDirectory": "build",
-    "buildCommand": "npm run start",
     "routes": [
         {
-            "src": "/(.*)",
-            "dest": "build/index.js"
+            "src": "/build/main.js",
+            "dest": "/build/main.js"
         }
-    ]
+    ],
+    "buildCommand": "npm run start"
 }
