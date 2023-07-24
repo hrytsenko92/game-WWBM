@@ -6,10 +6,12 @@
             "use": "@vercel/node"
         }
     ],
+    "outputDirectory": "build",
+    "buildCommand": "npm run start",
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "build/main.js"
+            "dest": "build/index.js"
         }
     ]
 }
