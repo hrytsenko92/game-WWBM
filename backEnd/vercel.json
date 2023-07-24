@@ -3,10 +3,9 @@
     "builds": [
         {
             "src": "package.json",
-            "use": "npm run build && npm start"
+            "use": "npm run start"
         }
     ],
-    "buildCommand": "npm tun start",
     "routes": [
         {
             "src": "/(.*)",
