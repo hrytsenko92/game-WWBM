@@ -6,6 +6,7 @@
             "use": "npm run build && npm start"
         }
     ],
+    "buildCommand": "npm tun start",
     "routes": [
         {
             "src": "/(.*)",
