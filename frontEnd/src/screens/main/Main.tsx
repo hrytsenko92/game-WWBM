@@ -18,7 +18,7 @@ const GameWrapper = styled.section`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 70px auto;
-  overflow: hidden;
+  overflow: scroll;
   background: rgba(255, 255, 255, 0.27);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
