@@ -108,7 +108,7 @@ export const GameBar: React.FC<PropsType> = ({
     if (isTrue) {
       setTimeout(() => {
         selectAnswer(isTrue);
-      }, 3000);
+      }, 2000);
     } else {
       setTimeout(() => {
         selectAnswer(isTrue);
