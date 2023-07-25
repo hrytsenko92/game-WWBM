@@ -15,6 +15,7 @@ const Container = styled.div`
   border-radius: 30px;
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
+  z-index: 30;
   &:before {
     content: ' ';
     position: absolute;

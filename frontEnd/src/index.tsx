@@ -25,7 +25,7 @@ body {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(-45deg, #051937, #150d5f, #144a8b, #1766ba, #1283eb);
+  background: linear-gradient(-45deg,#734c62, #7c5275, #815b8a, #7f65a2, #7671ba, #6982cb, #5992d8, #47a2e2, #59b6e2, #79c8e0, #9ed8e0, #c4e7e5);
   background-size: 400% 400%;
 	animation: gradient 15s ease infinite;
   @keyframes gradient {

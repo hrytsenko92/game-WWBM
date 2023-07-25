@@ -147,13 +147,19 @@ export const Game: React.FC = () => {
     setQuestion(res.nextQuestion);
     setUserScore(prevScore => prevScore + 1);
   };
+  
   const selectAnswer = async (next: boolean) => {
+    if (userScore === 17) {
+      setMessage('Вітаю!!! Ви виграли 1.000.000!')
+      setIsOpenPopup(true)
+      setNewGame(false);
+    }
     if (next) {
+      question ? await updateUserData(userData.userToken, question?.id) : null;
       await getNextQuestion(userScore);
     } else {
       setUserScore(1);
       adwise !== defaultAdwise ? setAdwise(defaultAdwise) : null;
-      await getNextQuestion(1);
       setNewGame(false);
     }
   };
@@ -167,6 +173,9 @@ export const Game: React.FC = () => {
   }, [newGame]);
   return (
     <>
+      {isOpenPopup ? (
+        <Popup message={message} handlePopup={handlePopup} />
+      ) : null}
       {newGame ? (
         <Container>
           <CountDouwnWrapper>
@@ -200,9 +209,6 @@ export const Game: React.FC = () => {
               <span>Loading</span>
             )}
           </GameBarWrapper>
-          {isOpenPopup ? (
-            <Popup message={message} handlePopup={handlePopup} />
-          ) : null}
         </Container>
       ) : (
         <NewGameContainer>

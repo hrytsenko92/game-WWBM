@@ -48,6 +48,7 @@ const LineWrapper = styled.div`
 const Question = styled.div`
   font-size: 1rem;
   text-align: center;
+  color: ${colors.blue};
 `;
 const AnswersWrapper = styled.div`
   height: 100%;
@@ -63,8 +64,8 @@ const AnswersWrapper = styled.div`
 `;
 const Answer = styled.button`
   padding: 5px 5px;
-  width: 140px;
-  height: 50px;
+  width: 100%;
+  height: 100%;
   border: 3px solid ${colors.border};
   border-radius: 25px;
   display: flex;

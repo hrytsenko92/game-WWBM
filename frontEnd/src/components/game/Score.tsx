@@ -15,10 +15,12 @@ const ScoreWrapper = styled.ul`
 const ScoreItem = styled.li`
   font-size: 0.9rem;
   color: gold;
+  opacity: 0.8;
 `;
 const ScoreItemCurrent = styled.li`
   background-color: gold;
   font-size: 0.9rem;
+  opacity: 0.8;
 `;
 const ScoreZero = styled.li`
   display: none;
@@ -32,7 +34,7 @@ type PropsType = {
 export const Score: React.FC<PropsType> = ({ itemIndex, token }) => {
   const updateScore = (itemIndex: number) => {
     let temp = 1;
-    itemIndex !== 1 ? (temp = itemIndex - 1) : null;
+    itemIndex !== 1 ? (temp = itemIndex - 1) : null; // if < 16
     const item = score[temp];
     updateUserScore(token, item);
   };
@@ -43,8 +45,8 @@ export const Score: React.FC<PropsType> = ({ itemIndex, token }) => {
     <Container>
       <ScoreWrapper>
         {score.map((item, index) => {
-          if (index === 0) {
-            return <ScoreZero key={index}>{item}</ScoreZero>;
+          if (item === 0) {
+            return <ScoreZero key={index}>start</ScoreZero>;
           } else if (index === itemIndex - 1) {
             return <ScoreItemCurrent key={index}>{item}</ScoreItemCurrent>;
           } else {
@@ -55,3 +57,10 @@ export const Score: React.FC<PropsType> = ({ itemIndex, token }) => {
     </Container>
   );
 };
+
+  // const updateScore = (itemIndex: number) => {
+  //   let temp = 1;
+  //   itemIndex !== 1 ? (temp = itemIndex - 1) : null; // if < 16
+  //   const item = score[temp];
+  //   updateUserScore(token, item);
+  // };

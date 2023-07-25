@@ -52,6 +52,7 @@ const ScoreItem = styled.li`
   list-style: none;
   font-size: 1rem;
   white-space: nowrap;
+  color: ${colors.white};
 `;
 const UserScoreWrapper = styled.div`
   grid-column: 1/3;
@@ -69,11 +70,13 @@ const UserScoreWrapper = styled.div`
 `;
 const Title = styled.h3`
   font-size: 1rem;
+  color: ${colors.white};
 `;
 const SybTitle = styled.h3`
   font-size: 0.8rem;
   font-weight: 400;
   text-align: justify;
+  color: ${colors.white};
 `;
 const UserScoreData = styled.span`
   font-size: 1.3rem;
@@ -108,6 +111,7 @@ const ResetWrapper = styled.div`
 const ResetTitle = styled.span`
   font-size: 1rem;
   text-align: center;
+  color: ${colors.white};
 `;
 const Reset = styled.button`
   width: 40px;
@@ -141,6 +145,7 @@ const ExitWrapper = styled.div`
 const ExitTitle = styled.span`
   font-size: 1rem;
   text-align: center;
+  color: ${colors.white};
 `;
 const Exit = styled.button`
   width: 40px;

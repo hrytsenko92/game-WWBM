@@ -68,7 +68,10 @@ const GameLink = styled(Link)`
   background-position: center;
   opacity: 0.8;
 `;
-const OutletWrapper = styled.section``;
+const OutletWrapper = styled.section`
+  background-color: #454545;
+  opacity: 1;
+`;
 
 export const Main = () => {
   const [gameLink, setGameLink] = useState('game');
