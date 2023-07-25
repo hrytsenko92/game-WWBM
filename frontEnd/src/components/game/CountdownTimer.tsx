@@ -19,7 +19,7 @@ export const CountdownTimer: React.FC<PropsType> = ({
       <CountdownCircleTimer
         isPlaying
         key={newCountDown}
-        duration={9959}
+        duration={59}
         size={100}
         colors={[
           '#ffd700',
