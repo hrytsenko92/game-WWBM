@@ -12,7 +12,7 @@ const Container = styled.div`
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  padding: 25px;
+  padding: 15px;
   background: rgba(255, 255, 255, 0.11);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -38,7 +38,7 @@ const ButtonWrapper = styled.div`
 `;
 const Title = styled.span`
   text-align: center;
-  color: ${colors.white};
+  color: white;
   opacity: 0.8;
 `;
 const Button = styled.button`

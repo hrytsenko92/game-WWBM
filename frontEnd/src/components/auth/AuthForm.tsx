@@ -175,7 +175,7 @@ export const AuthForm: React.FC<{
           </InputWrapper>
         ) : null}
       </ExpandInputWrapper>
-      <Submit type="submit" />
+      <Submit type="submit" value='Надіслати' />
     </Form>
   );
 };

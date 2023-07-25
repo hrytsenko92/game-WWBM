@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import { colors } from '../../types/colors';
 
 const Container = styled.section`
-  padding: 25px;
-  height: calc(100vh - 25px);
+  height: calc(100vh - 15px);
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: flex-start;
+  overflow: scroll;
 `;
 const GameWrapper = styled.section`
   width: calc(100vw - 50px);
