@@ -8,6 +8,7 @@ import { NextQuestion, AdwiseType, defaultAdwise } from '../../types/allType';
 import { Popup } from '../../components/game/Popup';
 import { CountdownTimer } from '../../components/game/CountdownTimer';
 import { updateUserData, getQuestion } from '../../components/game/dataLoaders';
+import { WinLoose } from '../../components/game/WinLose';
 import { colors } from '../../types/colors';
 import wwbmSVG from '../../../public/wwbm.svg';
 
@@ -66,7 +67,7 @@ const GameBarWrapper = styled.section`
 `;
 const NewGameContainer = styled.section`
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
   min-height: 400px;
@@ -116,10 +117,14 @@ export const Game: React.FC = () => {
   const [isOpenPopup, setIsOpenPopup] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const userData = useAppSelector(state => state.userData);
+  const [winLose, setWinLose] = useState<boolean>(false)
 
   const handlePopup = () => {
     setIsOpenPopup(prev => !prev);
   };
+  const handleWinLose = (i:boolean) => {
+    setWinLose(i);
+  }
   const handleFiftyPercent = (a: AdwiseType[]) => {
     setAdwise(a);
     setFiftyPercent(true);
@@ -147,11 +152,10 @@ export const Game: React.FC = () => {
     setQuestion(res.nextQuestion);
     setUserScore(prevScore => prevScore + 1);
   };
-  
   const selectAnswer = async (next: boolean) => {
     if (userScore === 17) {
       setMessage('Вітаю!!! Ви виграли 1.000.000!')
-      setIsOpenPopup(true)
+      handleWinLose(true)
       setNewGame(false);
     }
     if (next) {
@@ -160,6 +164,8 @@ export const Game: React.FC = () => {
     } else {
       setUserScore(1);
       adwise !== defaultAdwise ? setAdwise(defaultAdwise) : null;
+      setMessage('На жаль це була не правильна відповідь. Ви програли');
+      handleWinLose(true);
       setNewGame(false);
     }
   };
@@ -171,11 +177,9 @@ export const Game: React.FC = () => {
     setAskViewers(false);
     newGame ? getNextQuestion(1) : null;
   }, [newGame]);
+  console.log(winLose)
   return (
     <>
-      {isOpenPopup ? (
-        <Popup message={message} handlePopup={handlePopup} />
-      ) : null}
       {newGame ? (
         <Container>
           <CountDouwnWrapper>
@@ -209,9 +213,15 @@ export const Game: React.FC = () => {
               <span>Loading</span>
             )}
           </GameBarWrapper>
+          {isOpenPopup ? (
+            <Popup message={message} handlePopup={handlePopup} />
+          ) : null}
         </Container>
       ) : (
         <NewGameContainer>
+          {winLose ? (
+            <WinLoose message={message} handleWinLose={handleWinLose} />
+          ) : null}
           <NewGame>
             <NewGameMessage>Розпочати гру?</NewGameMessage>
             <NewGameBtn onClick={() => setNewGame(true)}>
