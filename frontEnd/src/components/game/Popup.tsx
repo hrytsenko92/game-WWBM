@@ -7,7 +7,7 @@ const Container = styled.div`
   margin: 40px;
   position: absolute;
   right: -10px;
-  top: 25px;
+  top: 55px;
   width: 200px;
   height: auto;
   background-color: ${colors.defaultQuestion};

@@ -3,27 +3,20 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../../types/colors';
 
-const Container = styled.section`
-  height: calc(100vh - 15px);
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: flex-start;
-  overflow: scroll;
-`;
+
 const GameWrapper = styled.section`
-  width: calc(100vw - 50px);
-  max-width: 768px;
-  height: 100%;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 70px auto;
-  overflow: scroll;
-  background: rgba(255, 255, 255, 0.27);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(19.7px);
-  -webkit-backdrop-filter: blur(19.7px);
+  overflow: hidden;
+  height: 100%;
+  @media screen and (min-width: 769px) {
+    background: rgba(255, 255, 255, 0.27);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(19.7px);
+    -webkit-backdrop-filter: blur(19.7px);
+  }
 `;
 const Header = styled.header`
   display: grid;
@@ -69,8 +62,28 @@ const GameLink = styled(Link)`
   opacity: 0.8;
 `;
 const OutletWrapper = styled.section`
-  background-color: #454545;
+  background-color: #565454;
   opacity: 1;
+`;
+const Container = styled.section`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  width: 100vw;
+  @media screen and (min-width: 768px) {
+    padding: 25px;
+    align-items: center;
+  }
+  ${GameWrapper} {
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    }
+    @media screen and (min-width: 768px) {
+      width: 768px;
+    }
+  }
 `;
 
 export const Main = () => {

@@ -20,7 +20,6 @@ const Container = styled.section`
   grid-template-rows: auto auto;
   justify-content: space-between;
   padding: 15px;
-  overflow: scroll;
   animation: fadeIn 1s ease-out forwards;
   @keyframes fadeIn {
     from {

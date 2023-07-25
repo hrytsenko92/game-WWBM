@@ -16,6 +16,6 @@ export const colors: ColorsType = {
   blue: '#222128',
   gold: '#e8ae1c',
   border: '#353535',
-  defaultQuestion: '#b0b8be',
+  defaultQuestion: '#565454',
   green: '#00e42e',
 };
