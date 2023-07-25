@@ -39,5 +39,5 @@ export const score: Array<number> = [
   125000, 250000, 500000, 10000000
 ];
 
-export const urlPath = 'http://localhost:5001';
+export const urlPath = 'https://game-wwbm.vercel.app';
 // 'https://game-wwbm.vercel.app'
