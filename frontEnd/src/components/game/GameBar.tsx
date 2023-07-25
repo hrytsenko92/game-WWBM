@@ -48,7 +48,7 @@ const LineWrapper = styled.div`
 const Question = styled.div`
   font-size: 1rem;
   text-align: center;
-  color: ${colors.blue};
+  color: white;
 `;
 const AnswersWrapper = styled.div`
   height: 100%;
@@ -72,6 +72,7 @@ const Answer = styled.button`
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+  color: white;
 `;
 type PropsType = {
   question: NextQuestion;
