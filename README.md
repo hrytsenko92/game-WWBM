@@ -16,4 +16,5 @@
 
 ## Scheme of project
 
-<img width="1440" alt="s" src="https://github.com/hrytsenko92/game-WWBM/assets/98227096/b1ee485b-da0f-4ed4-a630-8da6fa288437">
+<img width="1440" alt="Знімок екрана 2023-07-26 о 11 30 59" src="https://github.com/hrytsenko92/game-WWBM/assets/98227096/1a64684b-c56f-4949-87e5-180b4318f7e5">
+
