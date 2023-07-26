@@ -117,14 +117,14 @@ export const Game: React.FC = () => {
   const [isOpenPopup, setIsOpenPopup] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const userData = useAppSelector(state => state.userData);
-  const [winLose, setWinLose] = useState<boolean>(false)
+  const [winLose, setWinLose] = useState<boolean>(false);
 
   const handlePopup = () => {
     setIsOpenPopup(prev => !prev);
   };
-  const handleWinLose = (i:boolean) => {
+  const handleWinLose = (i: boolean) => {
     setWinLose(i);
-  }
+  };
   const handleFiftyPercent = (a: AdwiseType[]) => {
     setAdwise(a);
     setFiftyPercent(true);
@@ -154,8 +154,8 @@ export const Game: React.FC = () => {
   };
   const selectAnswer = async (next: boolean) => {
     if (userScore === 17) {
-      setMessage('Вітаю!!! Ви виграли 1.000.000!')
-      handleWinLose(true)
+      setMessage('Вітаю!!! Ви виграли 1.000.000!');
+      handleWinLose(true);
       setNewGame(false);
     }
     if (next) {
@@ -177,7 +177,7 @@ export const Game: React.FC = () => {
     setAskViewers(false);
     newGame ? getNextQuestion(1) : null;
   }, [newGame]);
-  console.log(winLose)
+  console.log(winLose);
   return (
     <>
       {newGame ? (

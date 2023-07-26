@@ -40,4 +40,3 @@ export const score: Array<number> = [
 ];
 
 export const urlPath = 'https://game-wwbm.vercel.app';
-// 'https://game-wwbm.vercel.app'
